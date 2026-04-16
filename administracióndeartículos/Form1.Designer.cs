@@ -135,9 +135,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(621, 147);
+            this.pictureBox1.Location = new System.Drawing.Point(661, 147);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(243, 182);
+            this.pictureBox1.Size = new System.Drawing.Size(203, 182);
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
@@ -169,7 +169,7 @@
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvArticulos.Location = new System.Drawing.Point(51, 158);
             this.dgvArticulos.Name = "dgvArticulos";
-            this.dgvArticulos.Size = new System.Drawing.Size(543, 150);
+            this.dgvArticulos.Size = new System.Drawing.Size(604, 150);
             this.dgvArticulos.TabIndex = 13;
             // 
             // Form1

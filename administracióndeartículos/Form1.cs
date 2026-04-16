@@ -21,7 +21,8 @@ namespace administracióndeartículos
         {
             ArticuloNegocio Negocio = new ArticuloNegocio();
             dgvArticulos.DataSource = Negocio.listar();
-
+            dgvArticulos.Columns["ID"].Visible=false;
+            //dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C";
         
 
         } 

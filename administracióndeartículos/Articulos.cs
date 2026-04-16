@@ -16,9 +16,9 @@ namespace administracióndeartículos
 
      public string Decripcion { get; set; } 
      
-     //public Marcas IdMarca { get; set; } 
+     public Marcas Marca { get; set; } 
      
-     //public Categorias Idcategoria  { get; set; } 
+     public Categorias Categoria  { get; set; } 
 
      public decimal Precio { get; set; }
 
