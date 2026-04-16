@@ -37,13 +37,13 @@
             this.gbFiltro = new System.Windows.Forms.GroupBox();
             this.rbCodigo = new System.Windows.Forms.RadioButton();
             this.rbMarca = new System.Windows.Forms.RadioButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ptxArticulo = new System.Windows.Forms.PictureBox();
             this.nuevoArticuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarArticuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.dgvArticulos = new System.Windows.Forms.DataGridView();
             this.gbFiltro.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptxArticulo)).BeginInit();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             this.SuspendLayout();
@@ -133,13 +133,13 @@
             this.rbMarca.Text = "Marca";
             this.rbMarca.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // ptxArticulo
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(661, 147);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(203, 182);
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
+            this.ptxArticulo.Location = new System.Drawing.Point(622, 137);
+            this.ptxArticulo.Name = "ptxArticulo";
+            this.ptxArticulo.Size = new System.Drawing.Size(419, 392);
+            this.ptxArticulo.TabIndex = 10;
+            this.ptxArticulo.TabStop = false;
             // 
             // nuevoArticuloToolStripMenuItem
             // 
@@ -160,25 +160,26 @@
             this.modificarArticuloToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(876, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(1053, 24);
             this.menuStrip2.TabIndex = 12;
             this.menuStrip2.Text = "menuStrip2";
             // 
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(51, 158);
+            this.dgvArticulos.Location = new System.Drawing.Point(12, 147);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.Size = new System.Drawing.Size(604, 150);
             this.dgvArticulos.TabIndex = 13;
+            this.dgvArticulos.SelectionChanged += new System.EventHandler(this.dgvArticulos_SelectionChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(876, 430);
+            this.ClientSize = new System.Drawing.Size(1053, 589);
             this.Controls.Add(this.dgvArticulos);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.ptxArticulo);
             this.Controls.Add(this.gbFiltro);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lbBusqueda);
@@ -193,7 +194,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.gbFiltro.ResumeLayout(false);
             this.gbFiltro.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptxArticulo)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
@@ -212,7 +213,7 @@
         private System.Windows.Forms.GroupBox gbFiltro;
         private System.Windows.Forms.RadioButton rbCodigo;
         private System.Windows.Forms.RadioButton rbMarca;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox ptxArticulo;
         private System.Windows.Forms.ToolStripMenuItem nuevoArticuloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificarArticuloToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip2;

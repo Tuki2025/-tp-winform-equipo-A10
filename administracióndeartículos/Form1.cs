@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dominio;
+using Negocio;
 
 namespace administracióndeartículos
 {
@@ -25,6 +27,30 @@ namespace administracióndeartículos
             //dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C";
         
 
-        } 
+        }
+
+        private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
+        {
+            Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+
+            ArticuloNegocio negocio = new ArticuloNegocio();
+
+            List<Imagen> imagenes = negocio.listarImagenes(seleccionado.ID);
+
+            try
+            {
+
+                ptxArticulo.Load(imagenes[0].ImagenUrl);
+            }
+            catch {
+
+                ptxArticulo.Load("https://images7.memedroid.com/images/UPLOADED652/5dc091d0d876f.jpeg");
+
+
+            } 
+
+
+
+        }
     }
 }

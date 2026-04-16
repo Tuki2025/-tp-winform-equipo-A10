@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Dominio; 
 
-namespace administracióndeartículos
+namespace Negocio
 {
-    internal class ArticuloNegocio
+    public class ArticuloNegocio
     {
 
         public List<Articulos> listar() {
 
-            List<Articulos> lista = new List<Articulos> ();
+            List<Articulos> lista = new List<Articulos>();
             SqlConnection Conexion = new SqlConnection();
             SqlCommand comando = new SqlCommand();
             SqlDataReader lector;
@@ -26,7 +27,8 @@ namespace administracióndeartículos
                 Conexion.Open();
                 lector = comando.ExecuteReader();
 
-                while (lector.Read()) {
+                while (lector.Read())
+                {
                     Articulos aux = new Articulos();
                     aux.ID = (int)lector["ID"];
                     aux.Codigo = (string)lector["Codigo"];
@@ -45,21 +47,66 @@ namespace administracióndeartículos
                     lista.Add(aux);
                 }
 
-                Conexion.Close(); 
+                Conexion.Close();
                 return lista;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
 
                 throw ex;
             }
-
-
-
-
-
+        
+        
         }
-    
+
+        public List<Imagen> listarImagenes(int idArticulo){
+
+
+            List<Imagen> lista = new List<Imagen>();
+            SqlConnection Conexion = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
+            SqlDataReader lector;
+
+            try {
+
+                Conexion.ConnectionString = "Server=.\\SQLEXPRESS;database=CATALOGO_P3_DB;integrated security=true";
+                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandText = "SELECT Id, IdArticulo, ImagenUrl FROM IMAGENES WHERE IdArticulo = " + idArticulo;
+                comando.Connection = Conexion;
+                Conexion.Open();
+                lector = comando.ExecuteReader();
+                while (lector.Read()) {
+
+                    Imagen aux = new Imagen();
+                    aux.Id = (int)lector["Id"];
+                    aux.IdArticulo = (int)lector["IdArticulo"];
+                    aux.ImagenUrl = (string)lector["ImagenUrl"];
+
+                    lista.Add(aux);
+
+                }
+
+                Conexion.Close();
+                return lista; 
+
+            }
+            catch (Exception ex) {
+
+                throw ex;
+            
+            
+            
+            }        
+        
+        
+        
+        
+        
+        
+        }
+
+
     
     
     }
