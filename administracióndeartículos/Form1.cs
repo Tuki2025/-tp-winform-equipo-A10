@@ -24,7 +24,7 @@ namespace administracióndeartículos
             ArticuloNegocio Negocio = new ArticuloNegocio();
             dgvArticulos.DataSource = Negocio.listar();
             dgvArticulos.Columns["ID"].Visible=false;
-            //dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C";
+            dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
         
 
         }
@@ -51,6 +51,12 @@ namespace administracióndeartículos
 
 
 
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
         }
     }
 }

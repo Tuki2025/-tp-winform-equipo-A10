@@ -27,11 +27,11 @@ namespace Negocio
                     aux.Decripcion = (string)datos.Lector["Descripcion"];
                     aux.Precio = (decimal)datos.Lector["Precio"];
 
-                    aux.Marca = new Marcas();
+                    aux.Marca = new Marca();
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
 
-                    aux.Categoria = new Categorias();
+                    aux.Categoria = new Categoria();
                     aux.Categoria.Descripcion = (string)datos.Lector["Tipo"];
 
 
@@ -127,12 +127,12 @@ namespace Negocio
         
         
         }
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         /*public List<Imagen> listarImagenes(int idArticulo){
 
 
@@ -179,6 +179,38 @@ namespace Negocio
         
         }
         */
+
+        public void agregar(Articulos nuevo) {
+            AccesoDatos datos = new AccesoDatos();
+
+
+
+            try
+            {
+                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Decripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
+               
+                datos.setearParametro("@idMarca", nuevo.Marca.ID);
+                datos.setearParametro("@idCategoria", nuevo.Categoria.ID);
+                
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally {
+
+
+                datos.cerraConexion();
+            
+            
+            }
+        
+        }
+
+
 
     
     

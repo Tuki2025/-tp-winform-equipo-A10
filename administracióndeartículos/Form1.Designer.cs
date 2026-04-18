@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btAgregar = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             this.btModificar = new System.Windows.Forms.Button();
             this.btEliminar = new System.Windows.Forms.Button();
             this.btBuscar = new System.Windows.Forms.Button();
@@ -48,18 +48,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             this.SuspendLayout();
             // 
-            // btAgregar
+            // btnAgregar
             // 
-            this.btAgregar.Location = new System.Drawing.Point(64, 348);
-            this.btAgregar.Name = "btAgregar";
-            this.btAgregar.Size = new System.Drawing.Size(75, 23);
-            this.btAgregar.TabIndex = 3;
-            this.btAgregar.Text = "Agregar";
-            this.btAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Location = new System.Drawing.Point(43, 313);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.TabIndex = 3;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btModificar
             // 
-            this.btModificar.Location = new System.Drawing.Point(232, 348);
+            this.btModificar.Location = new System.Drawing.Point(231, 313);
             this.btModificar.Name = "btModificar";
             this.btModificar.Size = new System.Drawing.Size(75, 23);
             this.btModificar.TabIndex = 4;
@@ -68,7 +69,7 @@
             // 
             // btEliminar
             // 
-            this.btEliminar.Location = new System.Drawing.Point(397, 348);
+            this.btEliminar.Location = new System.Drawing.Point(399, 313);
             this.btEliminar.Name = "btEliminar";
             this.btEliminar.Size = new System.Drawing.Size(75, 23);
             this.btEliminar.TabIndex = 5;
@@ -186,7 +187,7 @@
             this.Controls.Add(this.btBuscar);
             this.Controls.Add(this.btEliminar);
             this.Controls.Add(this.btModificar);
-            this.Controls.Add(this.btAgregar);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.menuStrip2);
             this.MainMenuStrip = this.menuStrip2;
             this.Name = "Form1";
@@ -204,7 +205,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btAgregar;
+        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btModificar;
         private System.Windows.Forms.Button btEliminar;
         private System.Windows.Forms.Button btBuscar;

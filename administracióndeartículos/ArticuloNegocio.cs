@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Dominio; 
+using Dominio;
 
 namespace Negocio
 {
@@ -13,13 +13,15 @@ namespace Negocio
 
         public List<Articulos> listar()
         {
-            List<Articulos> lista = new List<Articulos>(); 
+            List<Articulos> lista = new List<Articulos>();
             AccesoDatos datos = new AccesoDatos();
-            try {
+            try
+            {
                 datos.setearConsulta("Select A.Id, A.Codigo, A.Nombre,A.Descripcion, A.Precio, C.Descripcion as Tipo, M.Descripcion as Marca from ARTICULOS A, CATEGORIAS C, MARCAS M where A.IdCategoria=C.Id and A.IdMarca=M.Id");
                 datos.ejecutarLectura();
 
-                while (datos.Lector.Read()) {
+                while (datos.Lector.Read())
+                {
                     Articulos aux = new Articulos();
                     aux.ID = (int)datos.Lector["ID"];
                     aux.Codigo = (string)datos.Lector["Codigo"];
@@ -27,11 +29,11 @@ namespace Negocio
                     aux.Decripcion = (string)datos.Lector["Descripcion"];
                     aux.Precio = (decimal)datos.Lector["Precio"];
 
-                    aux.Marca = new Marcas();
+                    aux.Marca = new Marca();
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
 
-                    aux.Categoria = new Categorias();
+                    aux.Categoria = new Categoria();
                     aux.Categoria.Descripcion = (string)datos.Lector["Tipo"];
 
 
@@ -41,7 +43,8 @@ namespace Negocio
 
                 return lista;
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
@@ -98,7 +101,8 @@ namespace Negocio
          }
         */
 
-        public List<Imagen> listarImagenes(int idArticulo) {
+        public List<Imagen> listarImagenes(int idArticulo)
+        {
             List<Imagen> lista = new List<Imagen>();
             AccesoDatos datos = new AccesoDatos();
 
@@ -107,7 +111,8 @@ namespace Negocio
                 datos.setearConsulta("SELECT Id, IdArticulo, ImagenUrl FROM IMAGENES WHERE IdArticulo = " + idArticulo);
                 datos.ejecutarLectura();
 
-                while (datos.Lector.Read()) {
+                while (datos.Lector.Read())
+                {
                     Imagen aux = new Imagen();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.IdArticulo = (int)datos.Lector["IdArticulo"];
@@ -115,24 +120,25 @@ namespace Negocio
 
                     lista.Add(aux);
                 }
-                
+
                 return lista;
 
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
 
                 throw ex;
             }
-        
-        
-        
+
+
+
         }
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         /*public List<Imagen> listarImagenes(int idArticulo){
 
 
@@ -180,7 +186,41 @@ namespace Negocio
         }
         */
 
-    
-    
+        public void agregar(Articulos nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+
+
+            try
+            {
+                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Decripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
+
+                datos.setearParametro("@idMarca", nuevo.Marca.ID);
+                datos.setearParametro("@idCategoria", nuevo.Categoria.ID);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+
+
+                datos.cerraConexion();
+
+
+            }
+
+        }
+
+
+
+
+
     }
 }

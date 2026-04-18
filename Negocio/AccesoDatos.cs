@@ -13,9 +13,9 @@ namespace Negocio
     {
         private SqlConnection conexion;
         private SqlCommand comando;
-        private SqlDataReader lector; 
-        
-        
+        private SqlDataReader lector;
+
+
         public SqlDataReader Lector
         { get { return lector; } }
 
@@ -25,29 +25,55 @@ namespace Negocio
             comando = new SqlCommand();
         }
 
-        public void setearConsulta(string consulta) {
+        public void setearConsulta(string consulta)
+        {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
-        
+
         }
 
-        public void ejecutarLectura() {
+        public void ejecutarLectura()
+        {
             comando.Connection = conexion;
 
-            try {
+            try
+            {
 
                 conexion.Open();
                 lector = comando.ExecuteReader();
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
 
                 throw ex;
 
 
             }
-         }
+        }
+
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
 
 
-        public void cerraConexion() {
+        }
+
+
+
+        public void cerraConexion()
+        {
 
             if (lector != null)
             {
@@ -57,6 +83,13 @@ namespace Negocio
         }
 
 
-    
+        public void setearParametro(string nombre, object valor)
+        {
+
+            comando.Parameters.AddWithValue(nombre, valor);
+
+        }
+
+
     }
 }
