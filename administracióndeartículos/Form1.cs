@@ -77,13 +77,30 @@ namespace administracióndeartículos
 
         private void btModificar_Click(object sender, EventArgs e)
         {
-            Articulos seleccionado;
-            seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccioná un artículo para modificar.");
+                return;
+            }
 
-            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
-            modificar.ShowDialog();
-       
-            cargarListado();
+            Articulos seleccionado = dgvArticulos.CurrentRow.DataBoundItem as Articulos;
+
+            if (seleccionado == null)
+            {
+                MessageBox.Show("Error al obtener el artículo seleccionado.");
+                return;
+            }
+
+            try
+            {
+                frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+                modificar.ShowDialog();
+                cargarListado();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void cargarImagenDefault()
         {
@@ -118,6 +135,44 @@ namespace administracióndeartículos
         {
             dgvArticulos.Columns["ID"].Visible = false;
             dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
+        }
+
+       
+        private void btEliminar_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccioná un artículo primero.");
+                return;
+            }
+
+            Articulos seleccionado = dgvArticulos.CurrentRow.DataBoundItem as Articulos;
+
+            if (seleccionado == null)
+            {
+                MessageBox.Show("Error al obtener el artículo seleccionado.");
+                return;
+            }
+
+            DialogResult respuesta = MessageBox.Show(
+                "¿Está seguro que desea eliminar el artículo?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (respuesta == DialogResult.Yes)
+            {
+                try
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    negocio.eliminar(seleccionado.ID);
+                    cargarListado();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }
