@@ -14,12 +14,20 @@ namespace administracióndeartículos
 {
     public partial class frmAltaArticulo : Form
     {
+        private Articulos articulo = null;/*creo un atributo de tipo articulo para usarlo en el constructor de modificacion, y asi cargar los datos del articulo a modificar en los campos correspondientes*/
         public frmAltaArticulo()
         {
             InitializeComponent();
         }
+        public frmAltaArticulo(Articulos articulo)
+        {
+            InitializeComponent();
+            this.articulo = articulo;
+            {
+                InitializeComponent();
+            }
 
-
+        }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -62,7 +70,21 @@ namespace administracióndeartículos
 
             try {
                 cboMarca.DataSource = marcaNegocio.listar();
-                cboCategoria.DataSource=categoriaNegocio.listar();
+                cboMarca.ValueMember = "ID";//propiedad que se va a guardar en la base de datos
+                cboMarca.DisplayMember = "Descripcion";//propiedad que se va a mostrar en el desplegable
+                cboCategoria.DataSource=categoriaNegocio.listar();//desplegables/coleccion tipo clave-valor
+                cboCategoria.ValueMember = "ID";//propiedad que se va a guardar en la base de datos
+                cboCategoria.DisplayMember = "Descripcion";//propiedad que se va a mostrar en el desplegable
+
+                if (articulo != null)/*si el articulo es distinto de null, es porque se esta usando el constructor de modificacion, entonces cargo los datos del articulo a modificar en los campos correspondientes*/
+                    txtCodigo.Text = articulo.Codigo;
+                    txtNombre.Text = articulo.Nombre;   
+                    txtDescripcion.Text = articulo.Decripcion;
+                    txtPrecio.Text = articulo.Precio.ToString();
+                    cboMarca.SelectedValue = articulo.Marca.ID;
+                    cboCategoria.SelectedValue = articulo.Categoria.ID;// precarga de articulo a modificar en los campos correspondientes*/
+                //cargarImagen (articulo. UrlImagen);
+                   
             } 
             catch(Exception ex)
             {

@@ -65,5 +65,14 @@ namespace administracióndeartículos
             alta.ShowDialog();
             cargarListado();
         }
+
+        private void btModificar_Click(object sender, EventArgs e)
+        {
+            Articulos seleccionado;
+            seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+            frmAltaArticulo alta = new frmAltaArticulo();
+            alta.ShowDialog();
+            cargarListado();
+        }
     }
 }
