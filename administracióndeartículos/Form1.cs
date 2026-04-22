@@ -63,6 +63,7 @@ namespace administracióndeartículos
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+            cargarListado();
         }
     }
 }
