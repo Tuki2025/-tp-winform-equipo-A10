@@ -10,7 +10,6 @@ namespace Negocio
 {
     public class ArticuloNegocio
     {
-
         public List<Articulos> listar()
         {
             List<Articulos> lista = new List<Articulos>();
@@ -24,17 +23,21 @@ namespace Negocio
                 {
                     Articulos aux = new Articulos();
                     aux.ID = (int)datos.Lector["ID"];
-                    aux.Codigo = (string)datos.Lector["Codigo"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Decripcion = (string)datos.Lector["Descripcion"];
-                    aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Codigo = (string)datos.leerColumna("Codigo");
+                    aux.Nombre = (string)datos.leerColumna("Nombre");
+                    aux.Decripcion = (string)datos.leerColumna("Descripcion");
+                    
+                    if (!(datos.Lector["Precio"] is DBNull))
+                        aux.Precio = (decimal)datos.Lector["Precio"];
+                    else
+                        aux.Precio = 0;
 
                     aux.Marca = new Marca();
-                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+                    aux.Marca.Descripcion = (string)datos.leerColumna("Marca");
 
 
                     aux.Categoria = new Categoria();
-                    aux.Categoria.Descripcion = (string)datos.Lector["Tipo"];
+                    aux.Categoria.Descripcion = (string)datos.leerColumna("Tipo");
 
 
                     lista.Add(aux);

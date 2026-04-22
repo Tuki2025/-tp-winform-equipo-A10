@@ -21,12 +21,23 @@ namespace administracióndeartículos
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio Negocio = new ArticuloNegocio();
-            dgvArticulos.DataSource = Negocio.listar();
-            dgvArticulos.Columns["ID"].Visible=false;
-            dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
-        
+            cargarListado();
+        }
 
+        private void cargarListado()
+        {
+            ArticuloNegocio Negocio = new ArticuloNegocio();
+            try
+            {
+                dgvArticulos.DataSource = Negocio.listar();
+                dgvArticulos.Columns["ID"].Visible = false;
+                dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)

@@ -25,6 +25,14 @@ namespace Negocio
             comando = new SqlCommand();
         }
 
+        public object leerColumna(string nombreColumna)
+        {
+            if (!(lector[nombreColumna] is DBNull))
+                return lector[nombreColumna];
+            else
+                return null;
+        }
+
         public void setearConsulta(string consulta)
         {
             comando.CommandType = System.Data.CommandType.Text;
