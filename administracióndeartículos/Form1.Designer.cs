@@ -31,18 +31,13 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btModificar = new System.Windows.Forms.Button();
             this.btEliminar = new System.Windows.Forms.Button();
-            this.btBuscar = new System.Windows.Forms.Button();
             this.lbBusqueda = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.gbFiltro = new System.Windows.Forms.GroupBox();
-            this.rbCodigo = new System.Windows.Forms.RadioButton();
-            this.rbMarca = new System.Windows.Forms.RadioButton();
+            this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.ptxArticulo = new System.Windows.Forms.PictureBox();
             this.nuevoArticuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modificarArticuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.dgvArticulos = new System.Windows.Forms.DataGridView();
-            this.gbFiltro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptxArticulo)).BeginInit();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
@@ -50,7 +45,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(43, 313);
+            this.btnAgregar.Location = new System.Drawing.Point(46, 262);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(75, 23);
             this.btnAgregar.TabIndex = 3;
@@ -60,7 +55,7 @@
             // 
             // btModificar
             // 
-            this.btModificar.Location = new System.Drawing.Point(231, 313);
+            this.btModificar.Location = new System.Drawing.Point(234, 262);
             this.btModificar.Name = "btModificar";
             this.btModificar.Size = new System.Drawing.Size(75, 23);
             this.btModificar.TabIndex = 4;
@@ -70,74 +65,33 @@
             // 
             // btEliminar
             // 
-            this.btEliminar.Location = new System.Drawing.Point(399, 313);
+            this.btEliminar.Location = new System.Drawing.Point(402, 262);
             this.btEliminar.Name = "btEliminar";
             this.btEliminar.Size = new System.Drawing.Size(75, 23);
             this.btEliminar.TabIndex = 5;
             this.btEliminar.Text = "Eliminar";
             this.btEliminar.UseVisualStyleBackColor = true;
             // 
-            // btBuscar
-            // 
-            this.btBuscar.Location = new System.Drawing.Point(433, 51);
-            this.btBuscar.Name = "btBuscar";
-            this.btBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btBuscar.TabIndex = 6;
-            this.btBuscar.Text = "Buscar";
-            this.btBuscar.UseVisualStyleBackColor = true;
-            // 
             // lbBusqueda
             // 
             this.lbBusqueda.AutoSize = true;
-            this.lbBusqueda.Location = new System.Drawing.Point(84, 35);
+            this.lbBusqueda.Location = new System.Drawing.Point(12, 35);
             this.lbBusqueda.Name = "lbBusqueda";
             this.lbBusqueda.Size = new System.Drawing.Size(55, 13);
             this.lbBusqueda.TabIndex = 7;
             this.lbBusqueda.Text = "Busqueda";
             // 
-            // textBox1
+            // txtBusqueda
             // 
-            this.textBox1.Location = new System.Drawing.Point(87, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(328, 20);
-            this.textBox1.TabIndex = 8;
-            // 
-            // gbFiltro
-            // 
-            this.gbFiltro.Controls.Add(this.rbCodigo);
-            this.gbFiltro.Controls.Add(this.rbMarca);
-            this.gbFiltro.Location = new System.Drawing.Point(87, 90);
-            this.gbFiltro.Name = "gbFiltro";
-            this.gbFiltro.Size = new System.Drawing.Size(162, 40);
-            this.gbFiltro.TabIndex = 9;
-            this.gbFiltro.TabStop = false;
-            this.gbFiltro.Text = "Buscar por:";
-            // 
-            // rbCodigo
-            // 
-            this.rbCodigo.AutoSize = true;
-            this.rbCodigo.Location = new System.Drawing.Point(98, 17);
-            this.rbCodigo.Name = "rbCodigo";
-            this.rbCodigo.Size = new System.Drawing.Size(58, 17);
-            this.rbCodigo.TabIndex = 1;
-            this.rbCodigo.Text = "Codigo";
-            this.rbCodigo.UseVisualStyleBackColor = true;
-            // 
-            // rbMarca
-            // 
-            this.rbMarca.AutoSize = true;
-            this.rbMarca.Checked = true;
-            this.rbMarca.Location = new System.Drawing.Point(7, 17);
-            this.rbMarca.Name = "rbMarca";
-            this.rbMarca.Size = new System.Drawing.Size(55, 17);
-            this.rbMarca.TabIndex = 0;
-            this.rbMarca.TabStop = true;
-            this.rbMarca.Text = "Marca";
-            this.rbMarca.UseVisualStyleBackColor = true;
+            this.txtBusqueda.Location = new System.Drawing.Point(15, 51);
+            this.txtBusqueda.Name = "txtBusqueda";
+            this.txtBusqueda.Size = new System.Drawing.Size(328, 20);
+            this.txtBusqueda.TabIndex = 8;
+            this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
             // 
             // ptxArticulo
             // 
-            this.ptxArticulo.Location = new System.Drawing.Point(622, 147);
+            this.ptxArticulo.Location = new System.Drawing.Point(625, 96);
             this.ptxArticulo.Name = "ptxArticulo";
             this.ptxArticulo.Size = new System.Drawing.Size(419, 392);
             this.ptxArticulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -173,7 +127,7 @@
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvArticulos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvArticulos.Location = new System.Drawing.Point(12, 147);
+            this.dgvArticulos.Location = new System.Drawing.Point(15, 96);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 62;
             this.dgvArticulos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -188,10 +142,8 @@
             this.ClientSize = new System.Drawing.Size(1053, 589);
             this.Controls.Add(this.dgvArticulos);
             this.Controls.Add(this.ptxArticulo);
-            this.Controls.Add(this.gbFiltro);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtBusqueda);
             this.Controls.Add(this.lbBusqueda);
-            this.Controls.Add(this.btBuscar);
             this.Controls.Add(this.btEliminar);
             this.Controls.Add(this.btModificar);
             this.Controls.Add(this.btnAgregar);
@@ -200,8 +152,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.gbFiltro.ResumeLayout(false);
-            this.gbFiltro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptxArticulo)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
@@ -215,12 +165,8 @@
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btModificar;
         private System.Windows.Forms.Button btEliminar;
-        private System.Windows.Forms.Button btBuscar;
         private System.Windows.Forms.Label lbBusqueda;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.GroupBox gbFiltro;
-        private System.Windows.Forms.RadioButton rbCodigo;
-        private System.Windows.Forms.RadioButton rbMarca;
+        private System.Windows.Forms.TextBox txtBusqueda;
         private System.Windows.Forms.PictureBox ptxArticulo;
         private System.Windows.Forms.ToolStripMenuItem nuevoArticuloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modificarArticuloToolStripMenuItem;

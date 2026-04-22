@@ -14,6 +14,7 @@ namespace administracióndeartículos
 {
     public partial class Form1 : Form
     {
+        private List<Articulos> listaArticulos;
         public Form1()
         {
             InitializeComponent();
@@ -29,9 +30,10 @@ namespace administracióndeartículos
             ArticuloNegocio Negocio = new ArticuloNegocio();
             try
             {
-                dgvArticulos.DataSource = Negocio.listar();
-                dgvArticulos.Columns["ID"].Visible = false;
-                dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
+                listaArticulos = Negocio.listar();
+                dgvArticulos.DataSource = listaArticulos;
+
+                manejoColumnas();
             }
             catch (Exception ex)
             {
@@ -86,6 +88,36 @@ namespace administracióndeartículos
         private void cargarImagenDefault()
         {
             ptxArticulo.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            buscar();
+        }
+        private void buscar()
+        {
+            List<Articulos> listaFiltrada;
+            string filtro = txtBusqueda.Text;
+
+            if (filtro.Length >= 3)
+            {
+                listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToLower().Contains(filtro.ToLower()) || 
+                x.Marca.Descripcion.ToLower().Contains(filtro.ToLower()) || 
+                x.Categoria.Descripcion.ToLower().Contains(filtro.ToLower()));
+            }
+            else
+            {
+                listaFiltrada = listaArticulos;
+            }
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = listaFiltrada;
+            manejoColumnas();
+        }
+        private void manejoColumnas()
+        {
+            dgvArticulos.Columns["ID"].Visible = false;
+            dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
         }
     }
 }
