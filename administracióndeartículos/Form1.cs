@@ -42,22 +42,29 @@ namespace administracióndeartículos
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
-            Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
-
-            ArticuloNegocio negocio = new ArticuloNegocio();
-
-            List<Imagen> imagenes = negocio.listarImagenes(seleccionado.ID);
-
-            try
+            if (dgvArticulos.CurrentRow != null)
             {
+                Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+                ArticuloNegocio negocio = new ArticuloNegocio();
 
-                ptxArticulo.Load(imagenes[0].ImagenUrl);
+                try
+                {
+                    List<Imagen> imagenes = negocio.listarImagenes(seleccionado.ID);
+
+                    if (imagenes != null && imagenes.Count > 0)
+                    {
+                        ptxArticulo.Load(imagenes[0].ImagenUrl);
+                    }
+                    else
+                    {
+                        cargarImagenDefault();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargarImagenDefault();
+                }
             }
-            catch {
-
-                ptxArticulo.Load("https://images7.memedroid.com/images/UPLOADED652/5dc091d0d876f.jpeg");
-            } 
-
         }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -73,6 +80,10 @@ namespace administracióndeartículos
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
             cargarListado();
+        }
+        private void cargarImagenDefault()
+        {
+            ptxArticulo.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
         }
     }
 }
