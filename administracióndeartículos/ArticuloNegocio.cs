@@ -48,60 +48,7 @@ namespace Negocio
                 throw ex;
             }
         }
-
-
-
-        /* public List<Articulos> listar() {
-
-             List<Articulos> lista = new List<Articulos>();
-             SqlConnection Conexion = new SqlConnection();
-             SqlCommand comando = new SqlCommand();
-             SqlDataReader lector;
-
-             try
-             {
-                 Conexion.ConnectionString = "Server=.\\SQLEXPRESS;database=CATALOGO_P3_DB;integrated security=true";
-                 comando.CommandType = System.Data.CommandType.Text;
-                 comando.CommandText = "Select A.Id, A.Codigo, A.Nombre,A.Descripcion, A.Precio, C.Descripcion as Tipo, M.Descripcion as Marca from ARTICULOS A, CATEGORIAS C, MARCAS M where A.IdCategoria=C.Id and A.IdMarca=M.Id";
-                 comando.Connection = Conexion;
-                 Conexion.Open();
-                 lector = comando.ExecuteReader();
-
-                 while (lector.Read())
-                 {
-                     Articulos aux = new Articulos();
-                     aux.ID = (int)lector["ID"];
-                     aux.Codigo = (string)lector["Codigo"];
-                     aux.Nombre = (string)lector["Nombre"];
-                     aux.Decripcion = (string)lector["Descripcion"];
-                     aux.Precio = (decimal)lector["Precio"];
-
-                     aux.Marca = new Marcas();
-                     aux.Marca.Descripcion = (string)lector["Marca"];
-
-
-                     aux.Categoria = new Categorias();
-                     aux.Categoria.Descripcion = (string)lector["Tipo"];
-
-
-                     lista.Add(aux);
-                 }
-
-                 Conexion.Close();
-                 return lista;
-             }
-             catch (Exception ex)
-             {
-
-
-                 throw ex;
-             }
-
-
-         }
-        */
-
-        public List<Imagen> listarImagenes(int idArticulo)
+       public List<Imagen> listarImagenes(int idArticulo)
         {
             List<Imagen> lista = new List<Imagen>();
             AccesoDatos datos = new AccesoDatos();
@@ -130,67 +77,10 @@ namespace Negocio
                 throw ex;
             }
 
-
-
         }
-
-
-
-
-
-
-        /*public List<Imagen> listarImagenes(int idArticulo){
-
-
-            List<Imagen> lista = new List<Imagen>();
-            SqlConnection Conexion = new SqlConnection();
-            SqlCommand comando = new SqlCommand();
-            SqlDataReader lector;
-
-            try {
-
-                Conexion.ConnectionString = "Server=.\\SQLEXPRESS;database=CATALOGO_P3_DB;integrated security=true";
-                comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "SELECT Id, IdArticulo, ImagenUrl FROM IMAGENES WHERE IdArticulo = " + idArticulo;
-                comando.Connection = Conexion;
-                Conexion.Open();
-                lector = comando.ExecuteReader();
-                while (lector.Read()) {
-
-                    Imagen aux = new Imagen();
-                    aux.Id = (int)lector["Id"];
-                    aux.IdArticulo = (int)lector["IdArticulo"];
-                    aux.ImagenUrl = (string)lector["ImagenUrl"];
-
-                    lista.Add(aux);
-
-                }
-
-                Conexion.Close();
-                return lista; 
-
-            }
-            catch (Exception ex) {
-
-                throw ex;
-            
-            
-            
-            }        
-        
-        
-        
-        
-        
-        
-        }
-        */
-
         public void agregar(Articulos nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
-
-
 
             try
             {
@@ -200,7 +90,6 @@ namespace Negocio
                 datos.setearParametro("@idCategoria", nuevo.Categoria.ID);
 
                 datos.ejecutarAccion();
-
             }
             catch (Exception ex)
             {
@@ -209,18 +98,9 @@ namespace Negocio
             }
             finally
             {
-
-
                 datos.cerraConexion();
-
-
             }
 
         }
-
-
-
-
-
     }
 }

@@ -45,14 +45,9 @@ namespace administracióndeartículos
             catch {
 
                 ptxArticulo.Load("https://images7.memedroid.com/images/UPLOADED652/5dc091d0d876f.jpeg");
-
-
             } 
 
-
-
         }
-
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             frmAltaArticulo alta = new frmAltaArticulo();

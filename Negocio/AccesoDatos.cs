@@ -29,7 +29,6 @@ namespace Negocio
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
-
         }
 
         public void ejecutarLectura()
@@ -38,16 +37,12 @@ namespace Negocio
 
             try
             {
-
                 conexion.Open();
                 lector = comando.ExecuteReader();
             }
             catch (Exception ex)
             {
-
                 throw ex;
-
-
             }
         }
 
@@ -66,11 +61,7 @@ namespace Negocio
                 throw ex;
 
             }
-
-
         }
-
-
 
         public void cerraConexion()
         {
@@ -85,11 +76,7 @@ namespace Negocio
 
         public void setearParametro(string nombre, object valor)
         {
-
             comando.Parameters.AddWithValue(nombre, valor);
-
         }
-
-
     }
 }

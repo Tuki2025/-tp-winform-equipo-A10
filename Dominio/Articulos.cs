@@ -23,11 +23,5 @@ namespace Dominio
 
      public decimal Precio { get; set; }
 
-     //public string ImagenUrl { get; set; }
-
-
-
-
-
     }
 }
