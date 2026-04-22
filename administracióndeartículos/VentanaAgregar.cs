@@ -35,28 +35,39 @@ namespace administracióndeartículos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Articulos art = new Articulos();
+            
             ArticuloNegocio negocio = new ArticuloNegocio();
 
             try
             {
-                art.Codigo = txtCodigo.Text;
-                art.Nombre = txtNombre.Text;
-                art.Decripcion = txtDescripcion.Text;
-                art.Precio = decimal.Parse(txtPrecio.Text);
-                art.Marca = (Marca)cboMarca.SelectedItem;
-                art.Categoria = (Categoria)cboCategoria.SelectedItem;
+                if (articulo == null)/*si el articulo es null, es porque se esta usando el constructor de alta, entonces creo un nuevo articulo para cargar los datos del nuevo articulo a agregar*/
+                    {
+                        articulo = new Articulos();
+                    }
+                articulo.Codigo = txtCodigo.Text;
+                articulo.Nombre = txtNombre.Text;
+                articulo.Decripcion = txtDescripcion.Text;
+                articulo.Precio = decimal.Parse(txtPrecio.Text);
+
+                articulo.Marca = (Marca)cboMarca.SelectedItem;
+                articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
+               
                 
-                negocio.agregar(art);
-                MessageBox.Show("Agregado exitosamente");
+                if(articulo.ID !=0)
+                { 
+                   negocio.modificar(articulo);
+                   MessageBox.Show("Modificado exitosamente");
+                }
+                else
+                { 
+                    negocio.agregar(articulo);
+                   MessageBox.Show("Agregado exitosamente");
+                }
+                  
                 Close();
             }
             catch (Exception ex)
             {
-
-
-
-
 
                 MessageBox.Show(ex.ToString());
             

@@ -18,12 +18,12 @@ namespace Negocio
             try
             {
                 datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, A.IdMarca, A.IdCategoria, C.Descripcion AS Tipo, M.Descripcion AS Marca FROM ARTICULOS A JOIN CATEGORIAS C ON A.IdCategoria = C.Id JOIN MARCAS M ON A.IdMarca = M.Id");
-                 datos.ejecutarLectura();
-
-                
+                datos.ejecutarLectura();
 
 
-                
+
+
+
                 while (datos.Lector.Read())
                 {
                     System.Diagnostics.Debug.WriteLine(datos.Lector[0].ToString());
@@ -117,6 +117,32 @@ namespace Negocio
                 datos.cerraConexion();
             }
 
+        }
+
+        public void modificar(Articulos articulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+               
+                datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id");
+                datos.setearParametro("@Codigo", articulo.Codigo);
+                datos.setearParametro("@Nombre", articulo.Nombre);
+                datos.setearParametro("@Descripcion", articulo.Decripcion);
+                datos.setearParametro("@Precio", articulo.Precio);
+                datos.setearParametro("@IdMarca", articulo.Marca.ID);
+                datos.setearParametro("@IdCategoria", articulo.Categoria.ID);
+                datos.setearParametro("@Id", articulo.ID);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerraConexion();
+            }
         }
     }
 }
