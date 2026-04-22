@@ -77,8 +77,10 @@ namespace administracióndeartículos
         {
             Articulos seleccionado;
             seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
-            frmAltaArticulo alta = new frmAltaArticulo();
-            alta.ShowDialog();
+
+            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+            modificar.ShowDialog();
+       
             cargarListado();
         }
         private void cargarImagenDefault()

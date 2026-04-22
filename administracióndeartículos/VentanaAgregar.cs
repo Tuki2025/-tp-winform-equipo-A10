@@ -19,12 +19,12 @@ namespace administracióndeartículos
         {
             InitializeComponent();
         }
-        public frmAltaArticulo(Articulos articulo)
-        {
-            InitializeComponent();
-            this.articulo = articulo;
+        public frmAltaArticulo(Articulos articulo)//cargo lo que seleccione en la primer ventana
+        {            
             {
                 InitializeComponent();
+                 this.articulo = articulo;
+                Text = "Modificar Artículo";
             }
 
         }
@@ -69,33 +69,47 @@ namespace administracióndeartículos
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
             try {
+
+                cboMarca.DataSource = null;
+                cboCategoria.DataSource = null;
+
+                List<Marca> listaMarcas = marcaNegocio.listar();
+                List<Categoria> listaCategorias = categoriaNegocio.listar();
+
+
+
+
+                //cargar combos primero
                 cboMarca.DataSource = marcaNegocio.listar();
-                cboMarca.ValueMember = "ID";//propiedad que se va a guardar en la base de datos
-                cboMarca.DisplayMember = "Descripcion";//propiedad que se va a mostrar en el desplegable
-                cboCategoria.DataSource=categoriaNegocio.listar();//desplegables/coleccion tipo clave-valor
+                cboMarca.ValueMember = "ID";
+                cboMarca.DisplayMember = "Descripcion";
+
+                cboCategoria.DataSource=categoriaNegocio.listar();
                 cboCategoria.ValueMember = "ID";//propiedad que se va a guardar en la base de datos
                 cboCategoria.DisplayMember = "Descripcion";//propiedad que se va a mostrar en el desplegable
+                //carga de articulo
 
                 if (articulo != null)/*si el articulo es distinto de null, es porque se esta usando el constructor de modificacion, entonces cargo los datos del articulo a modificar en los campos correspondientes*/
+                {
+                  
+
                     txtCodigo.Text = articulo.Codigo;
-                    txtNombre.Text = articulo.Nombre;   
+                    txtNombre.Text = articulo.Nombre;
                     txtDescripcion.Text = articulo.Decripcion;
                     txtPrecio.Text = articulo.Precio.ToString();
-                    cboMarca.SelectedValue = articulo.Marca.ID;
-                    cboCategoria.SelectedValue = articulo.Categoria.ID;// precarga de articulo a modificar en los campos correspondientes*/
-                //cargarImagen (articulo. UrlImagen);
-                   
+
+
+
+                     cboMarca.SelectedValue = articulo.Marca.ID;
+                     cboCategoria.SelectedValue = articulo.Categoria.ID;// precarga de articulo a modificar en los campos correspondientes*/
+                    //cargarImagen (articulo.UrlImagen);
+                }  
             } 
             catch(Exception ex)
             {
 
-
               MessageBox.Show(ex.ToString())  ;
             }
-        
-        
-        
-        
         
         
         }

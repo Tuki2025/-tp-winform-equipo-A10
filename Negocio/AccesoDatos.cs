@@ -35,6 +35,8 @@ namespace Negocio
 
         public void setearConsulta(string consulta)
         {
+
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
@@ -73,12 +75,11 @@ namespace Negocio
 
         public void cerraConexion()
         {
-
             if (lector != null)
-            {
                 lector.Close();
+
+            if (conexion.State == System.Data.ConnectionState.Open)
                 conexion.Close();
-            }
         }
 
 

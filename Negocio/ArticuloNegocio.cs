@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dominio;
 
+
 namespace Negocio
 {
     public class ArticuloNegocio
@@ -16,12 +17,18 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("Select A.Id, A.Codigo, A.Nombre,A.Descripcion, A.Precio, C.Descripcion as Tipo, M.Descripcion as Marca from ARTICULOS A, CATEGORIAS C, MARCAS M where A.IdCategoria=C.Id and A.IdMarca=M.Id");
-                datos.ejecutarLectura();
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, A.IdMarca, A.IdCategoria, C.Descripcion AS Tipo, M.Descripcion AS Marca FROM ARTICULOS A JOIN CATEGORIAS C ON A.IdCategoria = C.Id JOIN MARCAS M ON A.IdMarca = M.Id");
+                 datos.ejecutarLectura();
 
+                
+
+
+                
                 while (datos.Lector.Read())
                 {
+                    System.Diagnostics.Debug.WriteLine(datos.Lector[0].ToString());
                     Articulos aux = new Articulos();
+
                     aux.ID = (int)datos.Lector["ID"];
                     aux.Codigo = (string)datos.leerColumna("Codigo");
                     aux.Nombre = (string)datos.leerColumna("Nombre");
@@ -33,10 +40,12 @@ namespace Negocio
                         aux.Precio = 0;
 
                     aux.Marca = new Marca();
+                    aux.Marca.ID = (int)datos.Lector["IdMarca"];
                     aux.Marca.Descripcion = (string)datos.leerColumna("Marca");
 
 
                     aux.Categoria = new Categoria();
+                    aux.Categoria.ID = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Descripcion = (string)datos.leerColumna("Tipo");
 
 
@@ -49,6 +58,10 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerraConexion();
             }
         }
         public List<Imagen> listarImagenes(int idArticulo)
