@@ -47,25 +47,8 @@ namespace administracióndeartículos
             if (dgvArticulos.CurrentRow != null)
             {
                 Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
-                ArticuloNegocio negocio = new ArticuloNegocio();
 
-                try
-                {
-                    List<Imagen> imagenes = negocio.listarImagenes(seleccionado.ID);
-
-                    if (imagenes != null && imagenes.Count > 0)
-                    {
-                        ptxArticulo.Load(imagenes[0].ImagenUrl);
-                    }
-                    else
-                    {
-                        cargarImagenDefault();
-                    }
-                }
-                catch (Exception)
-                {
-                    cargarImagenDefault();
-                }
+                cargarImagen(seleccionado);
             }
         }
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -100,6 +83,24 @@ namespace administracióndeartículos
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        private void cargarImagen(Articulos art)
+        {
+            try
+            {
+                if (art.Imagenes != null && art.Imagenes.Count > 0)
+                {
+                    ptxArticulo.Load(art.Imagenes[0].ImagenUrl);
+                }
+                else
+                {
+                    cargarImagenDefault();
+                }
+            }
+            catch (Exception)
+            {
+                cargarImagenDefault();
             }
         }
         private void cargarImagenDefault()

@@ -20,10 +20,6 @@ namespace Negocio
                 datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, A.IdMarca, A.IdCategoria, C.Descripcion AS Tipo, M.Descripcion AS Marca FROM ARTICULOS A JOIN CATEGORIAS C ON A.IdCategoria = C.Id JOIN MARCAS M ON A.IdMarca = M.Id");
                 datos.ejecutarLectura();
 
-
-
-
-
                 while (datos.Lector.Read())
                 {
                     System.Diagnostics.Debug.WriteLine(datos.Lector[0].ToString());
@@ -48,6 +44,7 @@ namespace Negocio
                     aux.Categoria.ID = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Descripcion = (string)datos.leerColumna("Tipo");
 
+                    aux.Imagenes = listarImagenes(aux.ID);
 
                     lista.Add(aux);
 
