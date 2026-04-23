@@ -80,6 +80,7 @@
             this.Controls.Add(this.btAceptar);
             this.Controls.Add(this.btCancelar);
             this.Name = "frmAgregarImagen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AgregarImagen";
             this.ResumeLayout(false);
             this.PerformLayout();

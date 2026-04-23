@@ -15,6 +15,7 @@ namespace administracióndeartículos
     public partial class frmAltaArticulo : Form
     {
         private Articulos articulo = null;/*creo un atributo de tipo articulo para usarlo en el constructor de modificacion, y asi cargar los datos del articulo a modificar en los campos correspondientes*/
+        private int idAux;
         public frmAltaArticulo()
         {
             InitializeComponent();
@@ -41,9 +42,10 @@ namespace administracióndeartículos
             try
             {
                 if (articulo == null)/*si el articulo es null, es porque se esta usando el constructor de alta, entonces creo un nuevo articulo para cargar los datos del nuevo articulo a agregar*/
-                    {
-                        articulo = new Articulos();
-                    }
+                {
+                    articulo = new Articulos();
+                }
+
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
                 articulo.Descripcion = txtDescripcion.Text;
@@ -51,16 +53,19 @@ namespace administracióndeartículos
 
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
+
+                Imagen nuevaImg = new Imagen();
+                nuevaImg.ImagenUrl = txtUrlImagen.Text;
+                articulo.Imagenes.Add(nuevaImg);
                
-                
                 if(articulo.ID !=0)
-                { 
+                {
                    negocio.modificar(articulo);
                    MessageBox.Show("Modificado exitosamente");
                 }
                 else
                 { 
-                    negocio.agregar(articulo);
+                   negocio.agregar(articulo);
                    MessageBox.Show("Agregado exitosamente");
                 }
                   

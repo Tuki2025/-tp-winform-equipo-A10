@@ -97,12 +97,29 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
+                //una vez creado el articulo en la DB, puedo obtener su ID
+                datos.setearConsulta("SELECT MAX(Id) AS Id FROM ARTICULOS");
+                datos.ejecutarLectura();
+                int idGenerado = 0;
+                if (datos.Lector.Read())
+                {
+                    idGenerado = (int)datos.Lector["Id"] + 1;
+                }
+                datos.cerraConexion();
 
+                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
                 datos.setearParametro("@idMarca", nuevo.Marca.ID);
                 datos.setearParametro("@idCategoria", nuevo.Categoria.ID);
-
                 datos.ejecutarAccion();
+                datos.cerraConexion();
+
+                if (nuevo.Imagenes != null && nuevo.Imagenes.Count > 0 && nuevo.Imagenes[0].ImagenUrl.ToLower().Contains("http"))
+                {
+                    datos.setearConsulta("Insert into IMAGENES (IdArticulo, ImagenUrl) values (@idArticulo, @url)");
+                    datos.setearParametro("@idArticulo", idGenerado);
+                    datos.setearParametro("@url", nuevo.Imagenes[0].ImagenUrl);
+                    datos.ejecutarAccion();
+                }
             }
             catch (Exception ex)
             {

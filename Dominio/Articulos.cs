@@ -25,5 +25,11 @@ namespace Dominio
 
         public List<Imagen> Imagenes { get; set; }
 
+        public Articulos()
+        {
+            //Cada vez que se cree un objeto Articulos, ya va a tener su lista de imagenes para ser usada
+            Imagenes = new List<Imagen>();
+        }
+
     }
 }
