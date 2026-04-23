@@ -46,7 +46,7 @@ namespace administracióndeartículos
                     }
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
-                articulo.Decripcion = txtDescripcion.Text;
+                articulo.Descripcion = txtDescripcion.Text;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
 
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
@@ -106,7 +106,7 @@ namespace administracióndeartículos
 
                     txtCodigo.Text = articulo.Codigo;
                     txtNombre.Text = articulo.Nombre;
-                    txtDescripcion.Text = articulo.Decripcion;
+                    txtDescripcion.Text = articulo.Descripcion;
                     txtPrecio.Text = articulo.Precio.ToString();
 
 

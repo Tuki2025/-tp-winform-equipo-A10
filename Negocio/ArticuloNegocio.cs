@@ -28,7 +28,7 @@ namespace Negocio
                     aux.ID = (int)datos.Lector["ID"];
                     aux.Codigo = (string)datos.leerColumna("Codigo");
                     aux.Nombre = (string)datos.leerColumna("Nombre");
-                    aux.Decripcion = (string)datos.leerColumna("Descripcion");
+                    aux.Descripcion = (string)datos.leerColumna("Descripcion");
 
                     if (!(datos.Lector["Precio"] is DBNull))
                         aux.Precio = (decimal)datos.Lector["Precio"];
@@ -97,7 +97,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Decripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
+                datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
 
                 datos.setearParametro("@idMarca", nuevo.Marca.ID);
                 datos.setearParametro("@idCategoria", nuevo.Categoria.ID);
@@ -125,7 +125,7 @@ namespace Negocio
                 datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id");
                 datos.setearParametro("@Codigo", articulo.Codigo);
                 datos.setearParametro("@Nombre", articulo.Nombre);
-                datos.setearParametro("@Descripcion", articulo.Decripcion);
+                datos.setearParametro("@Descripcion", articulo.Descripcion);
                 datos.setearParametro("@Precio", articulo.Precio);
                 datos.setearParametro("@IdMarca", articulo.Marca.ID);
                 datos.setearParametro("@IdCategoria", articulo.Categoria.ID);

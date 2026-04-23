@@ -175,5 +175,21 @@ namespace administracióndeartículos
                 }
             }
         }
+
+        private void dgvArticulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+                return;
+
+            Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmDetalleArticulo frm = new frmDetalleArticulo(seleccionado);
+            frm.ShowDialog();
+        }
     }
 }
