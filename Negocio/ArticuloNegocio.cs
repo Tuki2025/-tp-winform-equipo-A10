@@ -121,7 +121,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-               
+
                 datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id");
                 datos.setearParametro("@Codigo", articulo.Codigo);
                 datos.setearParametro("@Nombre", articulo.Nombre);
@@ -159,5 +159,41 @@ namespace Negocio
                 datos.cerraConexion();
             }
         }
+
+
+        public void AgregarImagen(Imagen imagen)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+
+
+            try
+            {
+
+                datos.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@id, @url)");
+                datos.setearParametro("@id", imagen.IdArticulo);
+                datos.setearParametro("@url", imagen.ImagenUrl);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+
+
+            }
+            finally
+            {
+                datos.cerraConexion();
+
+            }
+
+        }
+
+
+
+
+
+
     }
 }

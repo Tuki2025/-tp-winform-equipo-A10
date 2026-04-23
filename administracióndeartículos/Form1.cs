@@ -15,6 +15,10 @@ namespace administracióndeartículos
     public partial class Form1 : Form
     {
         private List<Articulos> listaArticulos;
+        private List<Imagen> listaImagenes;
+        private int indiceImagen = 0;
+        private int IdAux;
+
         public Form1()
         {
             InitializeComponent();
@@ -87,11 +91,19 @@ namespace administracióndeartículos
         }
         private void cargarImagen(Articulos art)
         {
+            
+            ArticuloNegocio negocio = new ArticuloNegocio();
+
             try
             {
+                listaImagenes = negocio.listarImagenes(art.ID);
+                IdAux = art.ID;
+                indiceImagen = 0;
+
                 if (art.Imagenes != null && art.Imagenes.Count > 0)
-                {
-                    ptxArticulo.Load(art.Imagenes[0].ImagenUrl);
+                {   
+
+                    ptxArticulo.Load(art.Imagenes[indiceImagen].ImagenUrl);
                 }
                 else
                 {
@@ -190,6 +202,53 @@ namespace administracióndeartículos
 
             frmDetalleArticulo frm = new frmDetalleArticulo(seleccionado);
             frm.ShowDialog();
+        }
+
+
+        private void MovimientoImagen(string url)
+        {
+            try
+            {
+                ptxArticulo.Load(url);
+            }
+            catch
+            {
+                cargarImagenDefault();
+            }
+        }
+
+
+        private void btAtras_Click(object sender, EventArgs e)
+        {
+            if (listaImagenes == null || listaImagenes.Count == 0)
+                return;
+
+            indiceImagen--;
+
+            if (indiceImagen < 0)
+                indiceImagen = listaImagenes.Count - 1;
+
+            MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl);
+        }
+
+        private void btSiguiente_Click(object sender, EventArgs e)
+        {
+            if (listaImagenes == null || listaImagenes.Count == 0) /*Revisa si la lista es nula o no tiene nada*/
+                return;
+
+            indiceImagen++; /*Suma un valor al indice*/
+
+            if (indiceImagen >= listaImagenes.Count) /*Caso que el indice llegue a supera el tamaño maximo de la lista, el indice vuelve a cero*/
+                indiceImagen = 0;
+
+            MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl); /*carga la imagen nomás*/
+        }
+
+        private void btAgregar_Click(object sender, EventArgs e)
+        {
+            frmAgregarImagen alta = new frmAgregarImagen();
+            alta.idArt = IdAux;
+            alta.ShowDialog();
         }
     }
 }
