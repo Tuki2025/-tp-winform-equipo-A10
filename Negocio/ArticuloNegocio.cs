@@ -143,12 +143,17 @@ namespace Negocio
         }
         public void eliminar(int ID)
         {
-            AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datosImagenes = new AccesoDatos();
+            AccesoDatos datosArticulos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @Id");
-                datos.setearParametro("@Id", ID);
-                datos.ejecutarAccion();
+                datosImagenes.setearConsulta("DELETE FROM IMAGENES WHERE IdArticulo = @Id");
+                datosImagenes.setearParametro("@Id", ID);
+                datosImagenes.ejecutarAccion();
+                
+                datosArticulos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @Id");
+                datosArticulos.setearParametro("@Id", ID);
+                datosArticulos.ejecutarAccion();
             }
             catch (Exception)
             {
@@ -156,7 +161,8 @@ namespace Negocio
             }
             finally
             {
-                datos.cerraConexion();
+                datosImagenes.cerraConexion();
+                datosArticulos.cerraConexion();
             }
         }
 
