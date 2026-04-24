@@ -15,7 +15,6 @@ namespace administracióndeartículos
     public partial class frmAltaArticulo : Form
     {
         private Articulos articulo = null;/*creo un atributo de tipo articulo para usarlo en el constructor de modificacion, y asi cargar los datos del articulo a modificar en los campos correspondientes*/
-        private int idAux;
         public frmAltaArticulo()
         {
             InitializeComponent();
@@ -24,8 +23,9 @@ namespace administracióndeartículos
         {            
             {
                 InitializeComponent();
-                 this.articulo = articulo;
+                this.articulo = articulo;
                 Text = "Modificar Artículo";
+                lblTitulo.Text = "Modificar Artículo";
             }
 
         }
@@ -118,7 +118,7 @@ namespace administracióndeartículos
 
                      cboMarca.SelectedValue = articulo.Marca.ID;
                      cboCategoria.SelectedValue = articulo.Categoria.ID;// precarga de articulo a modificar en los campos correspondientes*/
-                    //cargarImagen (articulo.UrlImagen);
+                    
                 }  
             } 
             catch(Exception ex)
