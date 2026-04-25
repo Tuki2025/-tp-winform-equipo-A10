@@ -15,38 +15,98 @@ namespace administracióndeartículos
 {
     public partial class frmAltaArticulo : Form
     {
-        private Articulos articulo = null;/*creo un atributo de tipo articulo para usarlo en el constructor de modificacion, y asi cargar los datos del articulo a modificar en los campos correspondientes*/
+        private Articulos articulo = null;
+
+        // ===== ERROR PROVIDER =====
+        private ErrorProvider errorProvider1 = new ErrorProvider();
+
         public frmAltaArticulo()
         {
             InitializeComponent();
             ajustarDiseño(false);
         }
-        public frmAltaArticulo(Articulos articulo) //constructor para ventana modificar
-        {            
-            {
-                InitializeComponent();
-                ajustarDiseño(true);
 
-                this.articulo = articulo;
-                cargarListBox(articulo);
-            }
-        }
-        private void btnCancelar_Click(object sender, EventArgs e)
+        public frmAltaArticulo(Articulos articulo)
         {
-            this.Close();
+            InitializeComponent();
+            ajustarDiseño(true);
+
+            this.articulo = articulo;
+            cargarListBox(articulo);
+        }
+
+        private void frmAltaArticulo_Load(object sender, EventArgs e)
+        {
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+
+            try
+            {
+                // ===== CONFIG ERROR PROVIDER =====
+                errorProvider1.ContainerControl = this;
+                errorProvider1.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+
+                // ===== COMBOS =====
+                cboMarca.DataSource = marcaNegocio.listar();
+                cboMarca.ValueMember = "ID";
+                cboMarca.DisplayMember = "Descripcion";
+
+                cboCategoria.DataSource = categoriaNegocio.listar();
+                cboCategoria.ValueMember = "ID";
+                cboCategoria.DisplayMember = "Descripcion";
+
+                // ===== AUTOCOMPLETE =====
+                cboMarca.DropDownStyle = ComboBoxStyle.DropDown;
+                cboMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cboMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+                cboCategoria.DropDownStyle = ComboBoxStyle.DropDown;
+                cboCategoria.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cboCategoria.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+                if (articulo != null)
+                {
+                    txtCodigo.Text = articulo.Codigo;
+                    txtNombre.Text = articulo.Nombre;
+                    txtDescripcion.Text = articulo.Descripcion;
+                    txtPrecio.Text = articulo.Precio.ToString();
+
+                    cboMarca.SelectedValue = articulo.Marca.ID;
+                    cboCategoria.SelectedValue = articulo.Categoria.ID;
+                }
+                else
+                {
+                    cboMarca.SelectedIndex = -1;
+                    cboCategoria.SelectedIndex = -1;
+                }
+
+                // ===== LIMPIAR ERRORES AUTOMÁTICO =====
+                txtCodigo.TextChanged += (s, ev) => errorProvider1.SetError(txtCodigo, "");
+                txtNombre.TextChanged += (s, ev) => errorProvider1.SetError(txtNombre, "");
+                txtPrecio.TextChanged += (s, ev) => errorProvider1.SetError(txtPrecio, "");
+                txtUrlImagen.TextChanged += (s, ev) => errorProvider1.SetError(txtUrlImagen, "");
+                txtUrlImgMod.TextChanged += (s, ev) => errorProvider1.SetError(txtUrlImgMod, "");
+                cboMarca.SelectedIndexChanged += (s, ev) => errorProvider1.SetError(cboMarca, "");
+                cboCategoria.SelectedIndexChanged += (s, ev) => errorProvider1.SetError(cboCategoria, "");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            
+            // ===== VALIDACIÓN =====
+            if (!ValidarCampos())
+                return;
+
             ArticuloNegocio negocio = new ArticuloNegocio();
 
             try
             {
-                if (articulo == null)/*si el articulo es null, es porque se esta usando el constructor de alta, entonces creo un nuevo articulo para cargar los datos del nuevo articulo a agregar*/
-                {
-                    articulo = new Articulos();        
-                }
+                if (articulo == null)
+                    articulo = new Articulos();
 
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
@@ -55,94 +115,133 @@ namespace administracióndeartículos
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
-                if (articulo.ID == 0 && !string.IsNullOrWhiteSpace(txtUrlImagen.Text)) //para cuando es un Alta de articulo nuevo
+                // ===== ALTA: agregar imagen si hay =====
+                if (articulo.ID == 0 && !string.IsNullOrWhiteSpace(txtUrlImagen.Text))
                 {
+                    if (articulo.Imagenes == null)
+                        articulo.Imagenes = new List<Imagen>();
+
                     Imagen nuevaImg = new Imagen();
                     nuevaImg.ImagenUrl = txtUrlImagen.Text;
                     articulo.Imagenes.Add(nuevaImg);
                 }
-                
 
-               
-                if(articulo.ID !=0)
+                if (articulo.ID != 0)
                 {
-                   negocio.modificar(articulo);
-                   MessageBox.Show("Modificado exitosamente");
+                    negocio.modificar(articulo);
+                    MessageBox.Show("Modificado exitosamente");
                 }
                 else
-                { 
-                   negocio.agregar(articulo);
-                   MessageBox.Show("Agregado exitosamente");
+                {
+                    negocio.agregar(articulo);
+                    MessageBox.Show("Agregado exitosamente");
                 }
-                  
+
                 Close();
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
-            
             }
         }
 
-        private void frmAltaArticulo_Load(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            MarcaNegocio marcaNegocio = new MarcaNegocio();
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-            try {
-
-                cboMarca.DataSource = null;
-                cboCategoria.DataSource = null;
-
-                List<Marca> listaMarcas = marcaNegocio.listar();
-                List<Categoria> listaCategorias = categoriaNegocio.listar();
-
-
-                //cargar combos primero
-                cboMarca.DataSource = marcaNegocio.listar();
-                cboMarca.ValueMember = "ID";
-                cboMarca.DisplayMember = "Descripcion";
-
-                cboCategoria.DataSource=categoriaNegocio.listar();
-                cboCategoria.ValueMember = "ID";//propiedad que se va a guardar en la base de datos
-                cboCategoria.DisplayMember = "Descripcion";//propiedad que se va a mostrar en el desplegable
-                //carga de articulo
-
-                if (articulo != null)/*si el articulo es distinto de null, es porque se esta usando el constructor de modificacion, entonces cargo los datos del articulo a modificar en los campos correspondientes*/
-                {
-                  
-
-                    txtCodigo.Text = articulo.Codigo;
-                    txtNombre.Text = articulo.Nombre;
-                    txtDescripcion.Text = articulo.Descripcion;
-                    txtPrecio.Text = articulo.Precio.ToString();
-
-
-
-                     cboMarca.SelectedValue = articulo.Marca.ID;
-                     cboCategoria.SelectedValue = articulo.Categoria.ID;// precarga de articulo a modificar en los campos correspondientes*/
-                    
-                }  
-            } 
-            catch(Exception ex)
-            {
-
-              MessageBox.Show(ex.ToString())  ;
-            }
-        
-        
+            this.Close();
         }
+
+        // ===== VALIDACIONES =====
+        private bool ValidarCampos()
+        {
+            bool valido = true;
+            Control primerError = null;
+
+            LimpiarErrores();
+
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            {
+                errorProvider1.SetError(txtCodigo, "El código es obligatorio");
+                if (primerError == null) primerError = txtCodigo;
+                valido = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                errorProvider1.SetError(txtNombre, "El nombre es obligatorio");
+                if (primerError == null) primerError = txtNombre;
+                valido = false;
+            }
+
+            if (!decimal.TryParse(txtPrecio.Text, out decimal precio) || precio < 0)
+            {
+                errorProvider1.SetError(txtPrecio, "Precio inválido (≥ 0)");
+                if (primerError == null) primerError = txtPrecio;
+                valido = false;
+            }
+
+            // ===== VALIDAR URL ALTA =====
+            if (!string.IsNullOrWhiteSpace(txtUrlImagen.Text))
+            {
+                if (!Uri.IsWellFormedUriString(txtUrlImagen.Text, UriKind.Absolute))
+                {
+                    errorProvider1.SetError(txtUrlImagen, "URL inválida");
+                    if (primerError == null) primerError = txtUrlImagen;
+                    valido = false;
+                }
+            }
+
+            // ===== VALIDAR URL MODIFICACIÓN =====
+            if (!string.IsNullOrWhiteSpace(txtUrlImgMod.Text))
+            {
+                if (!Uri.IsWellFormedUriString(txtUrlImgMod.Text, UriKind.Absolute))
+                {
+                    errorProvider1.SetError(txtUrlImgMod, "URL inválida");
+                    if (primerError == null) primerError = txtUrlImgMod;
+                    valido = false;
+                }
+            }
+
+            if (cboMarca.SelectedItem == null)
+            {
+                errorProvider1.SetError(cboMarca, "Seleccione una marca");
+                if (primerError == null) primerError = cboMarca;
+                valido = false;
+            }
+
+            if (cboCategoria.SelectedItem == null)
+            {
+                errorProvider1.SetError(cboCategoria, "Seleccione una categoría");
+                if (primerError == null) primerError = cboCategoria;
+                valido = false;
+            }
+
+            if (!valido)
+                primerError.Focus();
+
+            return valido;
+        }
+
+        private void LimpiarErrores()
+        {
+            errorProvider1.SetError(txtCodigo, "");
+            errorProvider1.SetError(txtNombre, "");
+            errorProvider1.SetError(txtPrecio, "");
+            errorProvider1.SetError(txtUrlImagen, "");
+            errorProvider1.SetError(txtUrlImgMod, "");
+            errorProvider1.SetError(cboMarca, "");
+            errorProvider1.SetError(cboCategoria, "");
+        }
+
+        // ===== RESTO DE TU CÓDIGO (sin cambios) =====
 
         private void cargarListBox(Articulos art)
         {
             lbxImagenes.Items.Clear();
 
             foreach (var img in art.Imagenes)
-            {
                 lbxImagenes.Items.Add(img.ImagenUrl);
-            }
         }
+
         private void ajustarDiseño(bool esModificacion)
         {
             if (esModificacion)
@@ -161,13 +260,11 @@ namespace administracióndeartículos
             else
             {
                 this.Width = 600;
-                lblImagen.Visible = false;
-                txtUrlImagen.Visible = false;
+                lblImagen.Visible = true;
+                txtUrlImagen.Visible = true;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
                 lbxImagenes.Visible = false;
-                lblImagen.Visible = true;
-                txtUrlImagen.Visible = true;
                 lblUrlImgMod.Visible = false;
                 txtUrlImgMod.Visible = false;
             }
@@ -177,24 +274,22 @@ namespace administracióndeartículos
 
         private void centrarBotones()
         {
-            int espacioEntreBotones = 80;
-            int anchoBloque = btnAceptar.Width + espacioEntreBotones + btnCancelar.Width;
-
-            int inicioX = (this.ClientSize.Width - anchoBloque) / 2;
+            int espacio = 80;
+            int ancho = btnAceptar.Width + espacio + btnCancelar.Width;
+            int inicioX = (this.ClientSize.Width - ancho) / 2;
 
             btnAceptar.Location = new Point(inicioX, btnAceptar.Location.Y);
-            btnCancelar.Location = new Point(inicioX + btnAceptar.Width + espacioEntreBotones, btnCancelar.Location.Y);
+            btnCancelar.Location = new Point(inicioX + btnAceptar.Width + espacio, btnCancelar.Location.Y);
         }
 
         private void lbxImagenes_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxImagenes.SelectedItem != null)
             {
-                string urlSeleccionada = lbxImagenes.SelectedItem.ToString();
-
-                txtUrlImgMod.Text = urlSeleccionada;
-                cargarImagen(urlSeleccionada);
-            }   
+                string url = lbxImagenes.SelectedItem.ToString();
+                txtUrlImgMod.Text = url;
+                cargarImagen(url);
+            }
         }
 
         private void txtUrlImagen_Leave(object sender, EventArgs e)
@@ -204,14 +299,8 @@ namespace administracióndeartículos
 
         private void cargarImagen(string imagen)
         {
-            try
-            {
-                pbxImagen.Load(imagen);
-            }
-            catch (Exception)
-            {
-                cargarImagenDefault();
-            }
+            try { pbxImagen.Load(imagen); }
+            catch { cargarImagenDefault(); }
         }
 
         private void cargarImagenDefault()
@@ -230,7 +319,6 @@ namespace administracióndeartículos
                 nuevaImg.IdArticulo = articulo.ID;
 
                 articulo.Imagenes.Add(nuevaImg);
-
                 cargarListBox(articulo);
                 txtUrlImgMod.Clear();
             }
@@ -240,17 +328,16 @@ namespace administracióndeartículos
         {
             if (lbxImagenes.SelectedItem != null)
             {
-                int indice = lbxImagenes.SelectedIndex;
-                articulo.Imagenes.RemoveAt(indice);
+                int i = lbxImagenes.SelectedIndex;
+                articulo.Imagenes.RemoveAt(i);
                 cargarListBox(articulo);
                 txtUrlImgMod.Clear();
                 cargarImagenDefault();
             }
             else
             {
-                MessageBox.Show("Por favor, seleccione una imagen de la lista para eliminar.");
+                MessageBox.Show("Seleccione una imagen para eliminar.");
             }
         }
     }
-
 }
