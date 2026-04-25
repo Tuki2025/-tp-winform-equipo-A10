@@ -18,16 +18,17 @@ namespace administracióndeartículos
         public frmAltaArticulo()
         {
             InitializeComponent();
+            ajustarDiseño(false);
         }
-        public frmAltaArticulo(Articulos articulo)//cargo lo que seleccione en la primer ventana
+        public frmAltaArticulo(Articulos articulo) //constructor para ventana modificar
         {            
             {
                 InitializeComponent();
-                this.articulo = articulo;
-                Text = "Modificar Artículo";
-                lblTitulo.Text = "Modificar Artículo";
-            }
+                ajustarDiseño(true);
 
+                this.articulo = articulo;
+                cargarListBox(articulo);
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -128,6 +129,91 @@ namespace administracióndeartículos
             }
         
         
+        }
+
+        private void cargarListBox(Articulos art)
+        {
+            lbxImagenes.Items.Clear();
+
+            foreach (var img in art.Imagenes)
+            {
+                lbxImagenes.Items.Add(img.ImagenUrl);
+            }
+        }
+        private void ajustarDiseño(bool esModificacion)
+        {
+            if (esModificacion)
+            {
+                Text = "Modificar Artículo";
+                lblTitulo.Text = "Modificar Artículo";
+                this.Width = 800;
+                lblImagen.Visible = false;
+                txtUrlImagen.Visible = false;
+                lblUrlImgMod.Visible = true;
+                txtUrlImgMod.Visible = true;
+                btnAgregar.Visible = true;
+                btnEliminar.Visible = true;
+                lbxImagenes.Visible = true;
+            }
+            else
+            {
+                this.Width = 600;
+                lblImagen.Visible = false;
+                txtUrlImagen.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+                lbxImagenes.Visible = false;
+                lblImagen.Visible = true;
+                txtUrlImagen.Visible = true;
+                lblUrlImgMod.Visible = false;
+                txtUrlImgMod.Visible = false;
+            }
+
+            centrarBotones();
+        }
+
+        private void centrarBotones()
+        {
+            int espacioEntreBotones = 80;
+            int anchoBloque = btnAceptar.Width + espacioEntreBotones + btnCancelar.Width;
+
+            int inicioX = (this.ClientSize.Width - anchoBloque) / 2;
+
+            btnAceptar.Location = new Point(inicioX, btnAceptar.Location.Y);
+            btnCancelar.Location = new Point(inicioX + btnAceptar.Width + espacioEntreBotones, btnCancelar.Location.Y);
+        }
+
+        private void lbxImagenes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxImagenes.SelectedItem != null)
+            {
+                string urlSeleccionada = lbxImagenes.SelectedItem.ToString();
+
+                txtUrlImgMod.Text = urlSeleccionada;
+                cargarImagen(urlSeleccionada);
+            }   
+        }
+
+        private void txtUrlImagen_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(txtUrlImagen.Text);
+        }
+
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxImagen.Load(imagen);
+            }
+            catch (Exception)
+            {
+                cargarImagenDefault();
+            }
+        }
+
+        private void cargarImagenDefault()
+        {
+            pbxImagen.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
         }
     }
 
