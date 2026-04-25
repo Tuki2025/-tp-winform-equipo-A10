@@ -91,11 +91,12 @@ namespace administracióndeartículos
         }
         private void cargarImagen(Articulos art)
         {
-            
-            ArticuloNegocio negocio = new ArticuloNegocio();
+
+            ImagenNegocio negocio = new ImagenNegocio();
 
             try
             {
+
                 listaImagenes = negocio.listarImagenes(art.ID);
                 IdAux = art.ID;
                 indiceImagen = 0;

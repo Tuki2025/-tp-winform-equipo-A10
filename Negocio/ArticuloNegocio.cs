@@ -44,7 +44,8 @@ namespace Negocio
                     aux.Categoria.ID = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Descripcion = (string)datos.leerColumna("Tipo");
 
-                    aux.Imagenes = listarImagenes(aux.ID);
+                    ImagenNegocio imgNegocio = new ImagenNegocio();
+                    aux.Imagenes = imgNegocio.listarImagenes(aux.ID);
 
                     lista.Add(aux);
 
@@ -61,36 +62,7 @@ namespace Negocio
                 datos.cerraConexion();
             }
         }
-        public List<Imagen> listarImagenes(int idArticulo)
-        {
-            List<Imagen> lista = new List<Imagen>();
-            AccesoDatos datos = new AccesoDatos();
 
-            try
-            {
-                datos.setearConsulta("SELECT Id, IdArticulo, ImagenUrl FROM IMAGENES WHERE IdArticulo = " + idArticulo);
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    Imagen aux = new Imagen();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.IdArticulo = (int)datos.Lector["IdArticulo"];
-                    aux.ImagenUrl = (string)datos.Lector["ImagenUrl"];
-
-                    lista.Add(aux);
-                }
-
-                return lista;
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
         public void agregar(Articulos nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -115,27 +87,26 @@ namespace Negocio
 
                 if (nuevo.Imagenes != null && nuevo.Imagenes.Count > 0)
                 {
-                    datos.setearConsulta("Insert into IMAGENES (IdArticulo, ImagenUrl) values (@idArticulo, @url)");
-                    datos.setearParametro("@idArticulo", idGenerado);
-                    datos.setearParametro("@url", nuevo.Imagenes[0].ImagenUrl);
-                    datos.ejecutarAccion();
+                    ImagenNegocio imgNegocio = new ImagenNegocio();
+
+                    nuevo.Imagenes[0].IdArticulo = idGenerado;
+                    imgNegocio.AgregarImagen(nuevo.Imagenes[0]);
                 }
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
             {
                 datos.cerraConexion();
             }
-
         }
 
         public void modificar(Articulos articulo)
         {
             AccesoDatos datos = new AccesoDatos();
+            ImagenNegocio imgNegocio = new ImagenNegocio();
             try
             {
                 datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id");
@@ -149,18 +120,11 @@ namespace Negocio
                 datos.ejecutarAccion();
                 datos.cerraConexion();
 
-                datos.setearConsulta("DELETE FROM IMAGENES WHERE IdArticulo = @IdArt");
-                datos.setearParametro("@IdArt", articulo.ID);
-                datos.ejecutarAccion();
-                datos.cerraConexion();
+                imgNegocio.eliminarImagen(articulo.ID);
 
                 foreach (var img in articulo.Imagenes)
                 {
-                    datos.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@idArt, @url)");
-                    datos.setearParametro("@idArt", articulo.ID);
-                    datos.setearParametro("@url", img.ImagenUrl);
-                    datos.ejecutarAccion();
-                    datos.cerraConexion();
+                    imgNegocio.AgregarImagen(img);
                 }
             }
             catch (Exception ex)
@@ -174,14 +138,12 @@ namespace Negocio
         }
         public void eliminar(int ID)
         {
-            AccesoDatos datosImagenes = new AccesoDatos();
+            ImagenNegocio imgNegocio = new ImagenNegocio();
             AccesoDatos datosArticulos = new AccesoDatos();
             try
             {
-                datosImagenes.setearConsulta("DELETE FROM IMAGENES WHERE IdArticulo = @Id");
-                datosImagenes.setearParametro("@Id", ID);
-                datosImagenes.ejecutarAccion();
-                
+                imgNegocio.eliminarImagen(ID);
+
                 datosArticulos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @Id");
                 datosArticulos.setearParametro("@Id", ID);
                 datosArticulos.ejecutarAccion();
@@ -192,7 +154,6 @@ namespace Negocio
             }
             finally
             {
-                datosImagenes.cerraConexion();
                 datosArticulos.cerraConexion();
             }
         }
