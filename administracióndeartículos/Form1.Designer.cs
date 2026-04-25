@@ -39,17 +39,16 @@
             this.tsCategoriaModificar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsCategoriaEliminar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMarcas = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
-            this.dgvArticulos = new System.Windows.Forms.DataGridView();
-            this.btAtras = new System.Windows.Forms.Button();
-            this.btSiguiente = new System.Windows.Forms.Button();
-            this.btAgregar = new System.Windows.Forms.Button();
             this.tsMarcasAgregar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMarcasModificar = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMarcasEliminar = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.tsVer = new System.Windows.Forms.ToolStripMenuItem();
             this.tsVerCategorias = new System.Windows.Forms.ToolStripMenuItem();
             this.tsVerMarcas = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvArticulos = new System.Windows.Forms.DataGridView();
+            this.btAtras = new System.Windows.Forms.Button();
+            this.btSiguiente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptxArticulo)).BeginInit();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
@@ -149,6 +148,24 @@
             this.tsMarcas.Size = new System.Drawing.Size(57, 22);
             this.tsMarcas.Text = "Marcas";
             // 
+            // tsMarcasAgregar
+            // 
+            this.tsMarcasAgregar.Name = "tsMarcasAgregar";
+            this.tsMarcasAgregar.Size = new System.Drawing.Size(125, 22);
+            this.tsMarcasAgregar.Text = "Agregar";
+            // 
+            // tsMarcasModificar
+            // 
+            this.tsMarcasModificar.Name = "tsMarcasModificar";
+            this.tsMarcasModificar.Size = new System.Drawing.Size(125, 22);
+            this.tsMarcasModificar.Text = "Modificar";
+            // 
+            // tsMarcasEliminar
+            // 
+            this.tsMarcasEliminar.Name = "tsMarcasEliminar";
+            this.tsMarcasEliminar.Size = new System.Drawing.Size(125, 22);
+            this.tsMarcasEliminar.Text = "Eliminar";
+            // 
             // menuStrip2
             // 
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -162,6 +179,27 @@
             this.menuStrip2.Size = new System.Drawing.Size(1053, 24);
             this.menuStrip2.TabIndex = 12;
             this.menuStrip2.Text = "menuStrip2";
+            // 
+            // tsVer
+            // 
+            this.tsVer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsVerCategorias,
+            this.tsVerMarcas});
+            this.tsVer.Name = "tsVer";
+            this.tsVer.Size = new System.Drawing.Size(35, 22);
+            this.tsVer.Text = "Ver";
+            // 
+            // tsVerCategorias
+            // 
+            this.tsVerCategorias.Name = "tsVerCategorias";
+            this.tsVerCategorias.Size = new System.Drawing.Size(130, 22);
+            this.tsVerCategorias.Text = "Categorias";
+            // 
+            // tsVerMarcas
+            // 
+            this.tsVerMarcas.Name = "tsVerMarcas";
+            this.tsVerMarcas.Size = new System.Drawing.Size(130, 22);
+            this.tsVerMarcas.Text = "Marcas";
             // 
             // dgvArticulos
             // 
@@ -197,61 +235,11 @@
             this.btSiguiente.UseVisualStyleBackColor = true;
             this.btSiguiente.Click += new System.EventHandler(this.btSiguiente_Click);
             // 
-            // btAgregar
-            // 
-            this.btAgregar.Location = new System.Drawing.Point(800, 494);
-            this.btAgregar.Name = "btAgregar";
-            this.btAgregar.Size = new System.Drawing.Size(75, 23);
-            this.btAgregar.TabIndex = 16;
-            this.btAgregar.Text = "Agregar";
-            this.btAgregar.UseVisualStyleBackColor = true;
-            this.btAgregar.Click += new System.EventHandler(this.btAgregar_Click);
-            // 
-            // tsMarcasAgregar
-            // 
-            this.tsMarcasAgregar.Name = "tsMarcasAgregar";
-            this.tsMarcasAgregar.Size = new System.Drawing.Size(180, 22);
-            this.tsMarcasAgregar.Text = "Agregar";
-            // 
-            // tsMarcasModificar
-            // 
-            this.tsMarcasModificar.Name = "tsMarcasModificar";
-            this.tsMarcasModificar.Size = new System.Drawing.Size(180, 22);
-            this.tsMarcasModificar.Text = "Modificar";
-            // 
-            // tsMarcasEliminar
-            // 
-            this.tsMarcasEliminar.Name = "tsMarcasEliminar";
-            this.tsMarcasEliminar.Size = new System.Drawing.Size(180, 22);
-            this.tsMarcasEliminar.Text = "Eliminar";
-            // 
-            // tsVer
-            // 
-            this.tsVer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsVerCategorias,
-            this.tsVerMarcas});
-            this.tsVer.Name = "tsVer";
-            this.tsVer.Size = new System.Drawing.Size(35, 22);
-            this.tsVer.Text = "Ver";
-            // 
-            // tsVerCategorias
-            // 
-            this.tsVerCategorias.Name = "tsVerCategorias";
-            this.tsVerCategorias.Size = new System.Drawing.Size(180, 22);
-            this.tsVerCategorias.Text = "Categorias";
-            // 
-            // tsVerMarcas
-            // 
-            this.tsVerMarcas.Name = "tsVerMarcas";
-            this.tsVerMarcas.Size = new System.Drawing.Size(180, 22);
-            this.tsVerMarcas.Text = "Marcas";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1053, 589);
-            this.Controls.Add(this.btAgregar);
             this.Controls.Add(this.btSiguiente);
             this.Controls.Add(this.btAtras);
             this.Controls.Add(this.dgvArticulos);
@@ -289,7 +277,6 @@
         private System.Windows.Forms.DataGridView dgvArticulos;
         private System.Windows.Forms.Button btAtras;
         private System.Windows.Forms.Button btSiguiente;
-        private System.Windows.Forms.Button btAgregar;
         private System.Windows.Forms.ToolStripMenuItem tsCategoriaAgregar;
         private System.Windows.Forms.ToolStripMenuItem tsCategoriaModificar;
         private System.Windows.Forms.ToolStripMenuItem tsCategoriaEliminar;

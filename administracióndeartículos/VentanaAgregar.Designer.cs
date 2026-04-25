@@ -214,21 +214,23 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(543, 74);
+            this.btnAgregar.Location = new System.Drawing.Point(543, 76);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(27, 22);
             this.btnAgregar.TabIndex = 20;
-            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.Text = "+";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(618, 75);
+            this.btnEliminar.Location = new System.Drawing.Point(576, 76);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminar.Size = new System.Drawing.Size(27, 22);
             this.btnEliminar.TabIndex = 21;
-            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.Text = "-";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // pbxImagen
             // 

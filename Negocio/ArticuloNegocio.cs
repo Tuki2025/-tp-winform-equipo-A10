@@ -94,7 +94,6 @@ namespace Negocio
         public void agregar(Articulos nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
                 datos.setearConsulta("Insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio,IdMarca,IdCategoria) values('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "'," + nuevo.Precio + ",@idMarca,@idCategoria)");
@@ -139,7 +138,6 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-
                 datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, IdMarca = @IdMarca, IdCategoria = @IdCategoria WHERE Id = @Id");
                 datos.setearParametro("@Codigo", articulo.Codigo);
                 datos.setearParametro("@Nombre", articulo.Nombre);
@@ -149,6 +147,21 @@ namespace Negocio
                 datos.setearParametro("@IdCategoria", articulo.Categoria.ID);
                 datos.setearParametro("@Id", articulo.ID);
                 datos.ejecutarAccion();
+                datos.cerraConexion();
+
+                datos.setearConsulta("DELETE FROM IMAGENES WHERE IdArticulo = @IdArt");
+                datos.setearParametro("@IdArt", articulo.ID);
+                datos.ejecutarAccion();
+                datos.cerraConexion();
+
+                foreach (var img in articulo.Imagenes)
+                {
+                    datos.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@idArt, @url)");
+                    datos.setearParametro("@idArt", articulo.ID);
+                    datos.setearParametro("@url", img.ImagenUrl);
+                    datos.ejecutarAccion();
+                    datos.cerraConexion();
+                }
             }
             catch (Exception ex)
             {
@@ -183,41 +196,5 @@ namespace Negocio
                 datosArticulos.cerraConexion();
             }
         }
-
-
-        public void AgregarImagen(Imagen imagen)
-        {
-
-            AccesoDatos datos = new AccesoDatos();
-
-
-            try
-            {
-
-                datos.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@id, @url)");
-                datos.setearParametro("@id", imagen.IdArticulo);
-                datos.setearParametro("@url", imagen.ImagenUrl);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-
-
-            }
-            finally
-            {
-                datos.cerraConexion();
-
-            }
-
-        }
-
-
-
-
-
-
     }
 }

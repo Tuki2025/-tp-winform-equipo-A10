@@ -243,12 +243,5 @@ namespace administracióndeartículos
 
             MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl); /*carga la imagen nomás*/
         }
-
-        private void btAgregar_Click(object sender, EventArgs e)
-        {
-            frmAgregarImagen alta = new frmAgregarImagen();
-            alta.idArt = IdAux;
-            alta.ShowDialog();
-        }
     }
 }

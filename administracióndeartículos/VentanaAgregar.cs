@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Dominio;
-using Negocio;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace administracióndeartículos
 {
@@ -44,20 +45,24 @@ namespace administracióndeartículos
             {
                 if (articulo == null)/*si el articulo es null, es porque se esta usando el constructor de alta, entonces creo un nuevo articulo para cargar los datos del nuevo articulo a agregar*/
                 {
-                    articulo = new Articulos();
+                    articulo = new Articulos();        
                 }
 
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
                 articulo.Descripcion = txtDescripcion.Text;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
-
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
-                Imagen nuevaImg = new Imagen();
-                nuevaImg.ImagenUrl = txtUrlImagen.Text;
-                articulo.Imagenes.Add(nuevaImg);
+                if (articulo.ID == 0 && !string.IsNullOrWhiteSpace(txtUrlImagen.Text)) //para cuando es un Alta de articulo nuevo
+                {
+                    Imagen nuevaImg = new Imagen();
+                    nuevaImg.ImagenUrl = txtUrlImagen.Text;
+                    articulo.Imagenes.Add(nuevaImg);
+                }
+                
+
                
                 if(articulo.ID !=0)
                 {
@@ -92,8 +97,6 @@ namespace administracióndeartículos
 
                 List<Marca> listaMarcas = marcaNegocio.listar();
                 List<Categoria> listaCategorias = categoriaNegocio.listar();
-
-
 
 
                 //cargar combos primero
@@ -214,6 +217,39 @@ namespace administracióndeartículos
         private void cargarImagenDefault()
         {
             pbxImagen.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            cargarImagen(txtUrlImgMod.Text);
+
+            if (!string.IsNullOrWhiteSpace(txtUrlImgMod.Text))
+            {
+                Imagen nuevaImg = new Imagen();
+                nuevaImg.ImagenUrl = txtUrlImgMod.Text;
+                nuevaImg.IdArticulo = articulo.ID;
+
+                articulo.Imagenes.Add(nuevaImg);
+
+                cargarListBox(articulo);
+                txtUrlImgMod.Clear();
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (lbxImagenes.SelectedItem != null)
+            {
+                int indice = lbxImagenes.SelectedIndex;
+                articulo.Imagenes.RemoveAt(indice);
+                cargarListBox(articulo);
+                txtUrlImgMod.Clear();
+                cargarImagenDefault();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione una imagen de la lista para eliminar.");
+            }
         }
     }
 
