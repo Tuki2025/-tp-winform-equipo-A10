@@ -44,6 +44,12 @@ namespace administracióndeartículos
                 dgvArticulos.DataSource = listaArticulos;
 
                 manejoColumnas();
+
+                if(dgvArticulos.Rows.Count > 0)
+                {
+                    dgvArticulos.CurrentCell = dgvArticulos.Rows[0].Cells[1]; //dejo pre seleccionada la primer fila
+                }
+
             }
             catch (Exception ex)
             {
