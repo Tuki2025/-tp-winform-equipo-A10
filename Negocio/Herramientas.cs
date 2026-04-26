@@ -28,5 +28,16 @@ namespace Negocio
         {
             pbox.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
         }
+
+        public static bool checkNumero(string cadena)
+        {
+            if (string.IsNullOrEmpty(cadena)) return false;
+
+            foreach (char item in cadena)
+            {
+                if (!(char.IsNumber(item))) return false;
+            }
+            return true;
+        }
     }
 }

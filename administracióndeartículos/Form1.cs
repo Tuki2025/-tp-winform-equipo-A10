@@ -266,23 +266,13 @@ namespace administracióndeartículos
             }
             if (cboCampo.SelectedItem.ToString() == "Precio")
             {
-                if (!checkNumero(txtFiltroAvanzado.Text))
+                if (!Herramientas.checkNumero(txtFiltroAvanzado.Text))
                 {
                     MessageBox.Show("Por favor solo ingrese numeros");
                     return true;
                 }
             }
             return false;
-        }
-        private bool checkNumero(string cadena)
-        {
-            if (string.IsNullOrEmpty(cadena)) return false;
-
-            foreach (char item in cadena)
-            {
-                if (!(char.IsNumber(item))) return false;
-            }
-            return true;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
