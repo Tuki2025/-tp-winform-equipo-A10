@@ -89,8 +89,11 @@ namespace Negocio
                 {
                     ImagenNegocio imgNegocio = new ImagenNegocio();
 
-                    nuevo.Imagenes[0].IdArticulo = idGenerado;
-                    imgNegocio.AgregarImagen(nuevo.Imagenes[0]);
+                    foreach (var img in nuevo.Imagenes)
+                    {
+                        img.IdArticulo = idGenerado;
+                        imgNegocio.AgregarImagen(img);
+                    }
                 }
             }
             catch (Exception ex)

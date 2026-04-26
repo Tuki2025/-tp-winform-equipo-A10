@@ -98,13 +98,11 @@ namespace administracióndeartículos
             {
 
                 listaImagenes = negocio.listarImagenes(art.ID);
-                IdAux = art.ID;
                 indiceImagen = 0;
 
-                if (art.Imagenes != null && art.Imagenes.Count > 0)
+                if (listaImagenes != null && listaImagenes.Count > 0)
                 {   
-
-                    ptxArticulo.Load(art.Imagenes[indiceImagen].ImagenUrl);
+                    ptxArticulo.Load(listaImagenes[indiceImagen].ImagenUrl);
                 }
                 else
                 {
