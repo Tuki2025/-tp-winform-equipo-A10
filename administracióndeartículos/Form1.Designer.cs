@@ -39,9 +39,6 @@
             this.btSiguiente = new System.Windows.Forms.Button();
             this.tsCategorias = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMarcas = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsVer = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsVerCategorias = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsVerMarcas = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.categoríasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.marcasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -157,27 +154,6 @@
             this.tsMarcas.Name = "tsMarcas";
             this.tsMarcas.Size = new System.Drawing.Size(12, 22);
             // 
-            // tsVer
-            // 
-            this.tsVer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsVerCategorias,
-            this.tsVerMarcas});
-            this.tsVer.Name = "tsVer";
-            this.tsVer.Size = new System.Drawing.Size(35, 22);
-            this.tsVer.Text = "Ver";
-            // 
-            // tsVerCategorias
-            // 
-            this.tsVerCategorias.Name = "tsVerCategorias";
-            this.tsVerCategorias.Size = new System.Drawing.Size(130, 22);
-            this.tsVerCategorias.Text = "Categorias";
-            // 
-            // tsVerMarcas
-            // 
-            this.tsVerMarcas.Name = "tsVerMarcas";
-            this.tsVerMarcas.Size = new System.Drawing.Size(130, 22);
-            this.tsVerMarcas.Text = "Marcas";
-            // 
             // menuStrip2
             // 
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -185,8 +161,7 @@
             this.tsCategorias,
             this.categoríasToolStripMenuItem,
             this.marcasToolStripMenuItem,
-            this.tsMarcas,
-            this.tsVer});
+            this.tsMarcas});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
@@ -337,9 +312,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsMarcasAgregar;
         private System.Windows.Forms.ToolStripMenuItem tsMarcasModificar;
         private System.Windows.Forms.ToolStripMenuItem tsMarcasEliminar;
-        private System.Windows.Forms.ToolStripMenuItem tsVer;
-        private System.Windows.Forms.ToolStripMenuItem tsVerCategorias;
-        private System.Windows.Forms.ToolStripMenuItem tsVerMarcas;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.Label lblCampo;
         private System.Windows.Forms.Label lblCriterio;
