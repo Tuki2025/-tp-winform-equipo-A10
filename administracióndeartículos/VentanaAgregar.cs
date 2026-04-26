@@ -231,9 +231,6 @@ namespace administracióndeartículos
             errorProvider1.SetError(cboMarca, "");
             errorProvider1.SetError(cboCategoria, "");
         }
-
-        // ===== RESTO DE TU CÓDIGO (sin cambios) =====
-
         private void cargarListBox(Articulos art)
         {
             lbxImagenes.Items.Clear();
@@ -288,29 +285,17 @@ namespace administracióndeartículos
             {
                 string url = lbxImagenes.SelectedItem.ToString();
                 txtUrlImgMod.Text = url;
-                cargarImagen(url);
+                Herramientas.cargarImagen(pbxImagen, url);
             }
         }
 
         private void txtUrlImagen_Leave(object sender, EventArgs e)
         {
-            cargarImagen(txtUrlImagen.Text);
+            Herramientas.cargarImagen(pbxImagen ,txtUrlImagen.Text);
         }
-
-        private void cargarImagen(string imagen)
-        {
-            try { pbxImagen.Load(imagen); }
-            catch { cargarImagenDefault(); }
-        }
-
-        private void cargarImagenDefault()
-        {
-            pbxImagen.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
-        }
-
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            cargarImagen(txtUrlImgMod.Text);
+            Herramientas.cargarImagen(pbxImagen, txtUrlImagen.Text);
 
             if (!string.IsNullOrWhiteSpace(txtUrlImgMod.Text))
             {
@@ -332,7 +317,7 @@ namespace administracióndeartículos
                 articulo.Imagenes.RemoveAt(i);
                 cargarListBox(articulo);
                 txtUrlImgMod.Clear();
-                cargarImagenDefault();
+                Herramientas.cargarImagenDefault(pbxImagen);
             }
             else
             {

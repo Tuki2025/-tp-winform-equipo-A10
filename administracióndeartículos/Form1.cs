@@ -57,7 +57,17 @@ namespace administracióndeartículos
             {
                 Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
 
-                cargarImagen(seleccionado);
+                listaImagenes = seleccionado.Imagenes;
+                indiceImagen = 0;
+
+                if (seleccionado.Imagenes != null && seleccionado.Imagenes.Count > 0)
+                {
+                    Herramientas.cargarImagen(ptxArticulo, seleccionado.Imagenes[0].ImagenUrl);
+                }
+                else
+                {
+                    Herramientas.cargarImagen(ptxArticulo, null);
+                }
             }
         }
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -93,35 +103,6 @@ namespace administracióndeartículos
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-        private void cargarImagen(Articulos art)
-        {
-
-            ImagenNegocio negocio = new ImagenNegocio();
-
-            try
-            {
-
-                listaImagenes = negocio.listarImagenes(art.ID);
-                indiceImagen = 0;
-
-                if (listaImagenes != null && listaImagenes.Count > 0)
-                {
-                    ptxArticulo.Load(listaImagenes[indiceImagen].ImagenUrl);
-                }
-                else
-                {
-                    cargarImagenDefault();
-                }
-            }
-            catch (Exception)
-            {
-                cargarImagenDefault();
-            }
-        }
-        private void cargarImagenDefault()
-        {
-            ptxArticulo.Load("https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg");
         }
 
         private void txtBusqueda_TextChanged(object sender, EventArgs e)
@@ -191,12 +172,6 @@ namespace administracióndeartículos
                 }
             }
         }
-
-        private void dgvArticulos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvArticulos.CurrentRow == null)
@@ -204,24 +179,9 @@ namespace administracióndeartículos
 
             Articulos seleccionado = (Articulos)dgvArticulos.CurrentRow.DataBoundItem;
 
-            frmDetalleArticulo frm = new frmDetalleArticulo(seleccionado);
+            frmDetalleArticulo frm = new frmDetalleArticulo(seleccionado, indiceImagen);
             frm.ShowDialog();
         }
-
-
-        private void MovimientoImagen(string url)
-        {
-            try
-            {
-                ptxArticulo.Load(url);
-            }
-            catch
-            {
-                cargarImagenDefault();
-            }
-        }
-
-
         private void btAtras_Click(object sender, EventArgs e)
         {
             if (listaImagenes == null || listaImagenes.Count == 0)
@@ -232,7 +192,7 @@ namespace administracióndeartículos
             if (indiceImagen < 0)
                 indiceImagen = listaImagenes.Count - 1;
 
-            MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl);
+            Herramientas.cargarImagen(ptxArticulo, listaImagenes[indiceImagen].ImagenUrl);
         }
 
         private void btSiguiente_Click(object sender, EventArgs e)
@@ -245,7 +205,7 @@ namespace administracióndeartículos
             if (indiceImagen >= listaImagenes.Count) /*Caso que el indice llegue a supera el tamaño maximo de la lista, el indice vuelve a cero*/
                 indiceImagen = 0;
 
-            MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl); /*carga la imagen nomás*/
+            Herramientas.cargarImagen(ptxArticulo, listaImagenes[indiceImagen].ImagenUrl); /*carga la imagen nomás*/
         }
         private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
         {
