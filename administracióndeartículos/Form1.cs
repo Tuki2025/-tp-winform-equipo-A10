@@ -27,6 +27,10 @@ namespace administracióndeartículos
         private void Form1_Load(object sender, EventArgs e)
         {
             cargarListado();
+
+            cboCampo.Items.Add("Categorias");
+            cboCampo.Items.Add("Marcas");
+            cboCampo.Items.Add("Precio");
         }
 
         private void cargarListado()
@@ -45,7 +49,6 @@ namespace administracióndeartículos
                 MessageBox.Show(ex.ToString());
             }
         }
-
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvArticulos.CurrentRow != null)
@@ -241,6 +244,93 @@ namespace administracióndeartículos
                 indiceImagen = 0;
 
             MovimientoImagen(listaImagenes[indiceImagen].ImagenUrl); /*carga la imagen nomás*/
+        }
+        private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboCampo.SelectedItem == null) return;
+
+            string opcion = cboCampo.SelectedItem.ToString();
+
+            if(opcion == "Precio")
+            {
+                cboCriterio.Items.Clear();
+                cboCriterio.Items.Add("Mayor a");
+                cboCriterio.Items.Add("Menor a");
+                cboCriterio.Items.Add("Igual a");
+            }
+            else
+            {
+                cboCriterio.Items.Clear();
+                cboCriterio.Items.Add("Comienza con");
+                cboCriterio.Items.Add("Termina con");
+                cboCriterio.Items.Add("Contiene");
+            }
+        }
+        private void btnAplicarFiltro_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                if (validarFiltro()) return;
+
+                string campo = cboCampo.SelectedItem.ToString();
+                string criterio = cboCriterio.SelectedItem.ToString();
+                string filtro = txtFiltroAvanzado.Text;
+
+                dgvArticulos.DataSource = negocio.filtrar(campo, criterio, filtro);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool validarFiltro()
+        {
+            if (cboCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor seleccione el campo para filtrar");
+                return true;
+            }
+            if (cboCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor seleccione el criterio para filtrar");
+                return true;
+            }
+            if (cboCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (!checkNumero(txtFiltroAvanzado.Text))
+                {
+                    MessageBox.Show("Por favor solo ingrese numeros");
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool checkNumero(string cadena)
+        {
+            if (string.IsNullOrEmpty(cadena)) return false;
+
+            foreach (char item in cadena)
+            {
+                if (!(char.IsNumber(item))) return false;
+            }
+            return true;
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            txtFiltroAvanzado.Clear();
+            cboCampo.SelectedIndex = -1;
+            cboCriterio.SelectedIndex = -1;
+            cargarListado();
+        }
+
+        private void txtFiltroAvanzado_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter) //si se presiona Enter
+            {
+                btnAplicarFiltro_Click(sender, e);
+            }
         }
     }
 }
