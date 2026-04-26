@@ -77,6 +77,14 @@ namespace administracióndeartículos
                 MessageBox.Show("Por favor, escribí una descripción.");
                 return;
             }
+
+            if (checkExistencia(txtDescripcion.Text))
+            {
+                MessageBox.Show("La " + tipo.ToString().ToLower() + " que intena agregar ya existe");
+
+                return;
+            }
+
             // Creamos el objeto dinámicamente según corresponda
             dynamic nuevo = (tipo == TipoEntidad.Marca) ? (object)new Marca() : (object)new Categoria();
             nuevo.Descripcion = txtDescripcion.Text;
@@ -139,9 +147,21 @@ namespace administracióndeartículos
             txtDescripcion.Clear();
         }
 
-        private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private bool checkExistencia(string texto)
         {
+            var lista = (IEnumerable<object>)dgvDatos.DataSource; //me guardo el listado de la grilla
 
+            if (lista != null)
+            {
+                foreach (dynamic item in lista)
+                {
+                    if (item.Descripcion.ToString().ToLower() == texto.ToLower())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
