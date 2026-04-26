@@ -10,11 +10,12 @@ namespace Negocio
 {
     public class MarcaNegocio
     {
-    
-    public List<Marca> listar() {
-            
+
+        public List<Marca> listar()
+        {
+
             List<Marca> lista = new List<Marca>();
-            AccesoDatos datos= new AccesoDatos();
+            AccesoDatos datos = new AccesoDatos();
 
 
             try
@@ -39,11 +40,50 @@ namespace Negocio
 
                 throw ex;
             }
-            finally {
+            finally
+            {
 
                 datos.cerraConexion();
-            
+
             }
         }
+
+        public void agregar(Marca nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into MARCAS (Descripcion) values (@desc)");
+                datos.setearParametro("@desc", nuevo.Descripcion);
+                datos.ejecutarAccion();
+            }
+            finally { datos.cerraConexion(); }
+        }
+
+        public void modificar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update MARCAS set Descripcion = @desc where Id = @id");
+                datos.setearParametro("@desc", marca.Descripcion);
+                datos.setearParametro("@id", marca.ID);
+                datos.ejecutarAccion();
+            }
+            finally { datos.cerraConexion(); }
+        }
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("delete from MARCAS where Id = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            finally { datos.cerraConexion(); }
+        }
+
     }
 }

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Dominio;
 using Negocio;
 
+public enum TipoEntidad { Marca, Categoria }
+
 namespace administracióndeartículos
 {
     public partial class Form1 : Form
@@ -104,7 +106,7 @@ namespace administracióndeartículos
                 indiceImagen = 0;
 
                 if (listaImagenes != null && listaImagenes.Count > 0)
-                {   
+                {
                     ptxArticulo.Load(listaImagenes[indiceImagen].ImagenUrl);
                 }
                 else
@@ -133,8 +135,8 @@ namespace administracióndeartículos
 
             if (filtro.Length >= 3)
             {
-                listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToLower().Contains(filtro.ToLower()) || 
-                x.Marca.Descripcion.ToLower().Contains(filtro.ToLower()) || 
+                listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToLower().Contains(filtro.ToLower()) ||
+                x.Marca.Descripcion.ToLower().Contains(filtro.ToLower()) ||
                 x.Categoria.Descripcion.ToLower().Contains(filtro.ToLower()));
             }
             else
@@ -152,7 +154,7 @@ namespace administracióndeartículos
             dgvArticulos.Columns["Precio"].DefaultCellStyle.Format = "C2";
         }
 
-       
+
         private void btEliminar_Click(object sender, EventArgs e)
         {
             if (dgvArticulos.CurrentRow == null)
@@ -251,7 +253,7 @@ namespace administracióndeartículos
 
             string opcion = cboCampo.SelectedItem.ToString();
 
-            if(opcion == "Precio")
+            if (opcion == "Precio")
             {
                 cboCriterio.Items.Clear();
                 cboCriterio.Items.Add("Mayor a");
@@ -331,6 +333,31 @@ namespace administracióndeartículos
             {
                 btnAplicarFiltro_Click(sender, e);
             }
+        }
+
+        private void tsCategoriaAgregar_Click(object sender, EventArgs e)
+        {
+            frmMaestro ventana = new frmMaestro(TipoEntidad.Categoria);
+
+            ventana.ShowDialog();
+
+            cargarListado();
+        }
+
+        private void categoríasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMaestro ventana = new frmMaestro(TipoEntidad.Categoria);
+            ventana.ShowDialog(this);
+            cargarListado();
+
+        }
+
+        private void marcasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMaestro ventana = new frmMaestro(TipoEntidad.Marca);
+            ventana.ShowDialog(this);
+            cargarListado();
+
         }
     }
 }
